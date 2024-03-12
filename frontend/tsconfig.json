@@ -23,10 +23,18 @@
     /* Paths */
     "baseUrl": "./src",
     "paths": {
-      "@components/*": ["components/*"],
-      "@pages/*": ["pages/*"]
+      "~components/*": ["components/*"],
+      "~constants/*": ["constants/*"],
+      "~assets/*": ["assets/*"],
+      "~pages/*": ["pages/*"],
+      "~types/*": ["types/*"],
+      "~core/*": ["core/*"],
+      "~utils/*": ["utils/*"]
     }
   },
-  "include": ["src", "declaration.d.ts"],
+  "include": [
+    "src",
+    "src/types/i18n.d.ts"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 
 import "./App.css";
 
-import { appTheme } from "./core/theme/theme.ts";
+import { appTheme } from "./core/theme.ts";
 
 export const App = () => {
   return (

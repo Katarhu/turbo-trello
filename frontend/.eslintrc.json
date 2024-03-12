@@ -21,30 +21,33 @@
     "import"
   ],
   "rules": {
+    "react/react-in-jsx-scope": 0,
     "import/order": [
       "error",
       {
+        "newlines-between": "always",
         "groups": [
           [
-            "builtin",
-            "external"
+            "external",
+            "builtin"
           ],
-          "internal",
           [
+            "internal",
             "parent",
-            "index"
+            "index",
+            "unknown",
+            "object",
+            "type"
           ],
           [
             "sibling"
           ]
         ],
-        "newlines-between": "always",
         "alphabetize": {
           "order": "asc",
           "caseInsensitive": true
         }
       }
-    ],
-    "react/react-in-jsx-scope": 0
+    ]
   }
 }
