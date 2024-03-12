@@ -8,11 +8,16 @@
     "build": "tsc && vite build",
     "lint:ts-check": "eslint .  --ext .ts --ext .tsx",
     "lint:ts-fix": "eslint . --fix --ext .ts --ext .tsx",
-    "lint:format-check": "prettier --check './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.json",
-    "lint:format-fix": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc.json",
+    "lint:format-check": "prettier --check './**/*.{ts,tsx,json}' --config ./.prettierrc.json",
+    "lint:format-fix": "prettier --write './**/*.{ts,tsx,json}' --config ./.prettierrc.json",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.15.12",
+    "@mui/material": "^5.15.12",
+    "mobx": "^6.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.0"

@@ -1,4 +1,3 @@
-
 export const ErrorPage = () => {
-  return <div>Error page</div>
-}
+  return <div>Error page</div>;
+};

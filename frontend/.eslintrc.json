@@ -32,8 +32,10 @@
           "internal",
           [
             "parent",
-            "sibling",
             "index"
+          ],
+          [
+            "sibling"
           ]
         ],
         "newlines-between": "always",
