@@ -4,13 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "start:dev": "vite",
+    "start:preview": "vite preview",
     "build": "tsc && vite build",
     "lint:ts-check": "eslint .  --ext .ts --ext .tsx",
     "lint:ts-fix": "eslint . --fix --ext .ts --ext .tsx",
     "lint:format-check": "prettier --check './**/*.{ts,tsx,json}' --config ./.prettierrc.json",
-    "lint:format-fix": "prettier --write './**/*.{ts,tsx,json}' --config ./.prettierrc.json",
-    "preview": "vite preview"
+    "lint:format-fix": "prettier --write './**/*.{ts,tsx,json}' --config ./.prettierrc.json"
   },
   "dependencies": {
     "@emotion/react": "^11.11.4",
