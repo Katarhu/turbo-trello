@@ -7,7 +7,7 @@ import { PrismaService } from "../core/prisma/prisma.service";
 export class IdentityService {
   constructor(private prismaService: PrismaService) {}
 
-  async createUser(user: Prisma.UserCreateInput) {
+  async createUser(user: Prisma.IdentityCreateInput) {
     console.log(user);
   }
 }

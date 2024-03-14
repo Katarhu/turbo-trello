@@ -8,7 +8,7 @@ export class IdentityController {
   constructor(private identityService: IdentityService) {}
 
   @Post("/")
-  getUser(@Body() user: Prisma.UserCreateInput) {
+  getUser(@Body() user: Prisma.IdentityCreateInput) {
     return this.identityService.createUser(user);
   }
 }
