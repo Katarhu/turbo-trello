@@ -1,0 +1,10 @@
+services:
+  nestjs_dev:
+    container_name: "trello-nestjs"
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./backend/src:/app/src
