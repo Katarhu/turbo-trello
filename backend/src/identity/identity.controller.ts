@@ -7,8 +7,8 @@ import { IdentityService } from "./identity.service";
 export class IdentityController {
   constructor(private identityService: IdentityService) {}
 
-  @Post("/")
-  getUser(@Body() user: Prisma.IdentityCreateInput) {
+  @Post()
+  createUser(@Body() user: Prisma.IdentityCreateInput) {
     return this.identityService.createUser(user);
   }
 }

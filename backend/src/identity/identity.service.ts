@@ -9,5 +9,13 @@ export class IdentityService {
 
   async createUser(user: Prisma.IdentityCreateInput) {
     console.log(user);
+    this.prismaService.identity
+      .create({
+        data: {
+          email: user.email,
+          password: user.password,
+        },
+      })
+      .then();
   }
 }
