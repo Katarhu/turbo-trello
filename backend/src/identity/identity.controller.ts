@@ -1,14 +1,30 @@
-import { Body, Controller, Post } from "@nestjs/common";
-import { Prisma } from "@prisma/client";
+import { Body, Controller, Post, UseGuards, Request } from "@nestjs/common";
 
+import { LocalAuthGuard } from "~core/guards/local-auth.guard";
+import { RefreshJwtGuard } from "~core/guards/refresh-jwt.guard";
+
+import { RegisterCredentialsDto } from "./dto/register.credentials.dto";
 import { IdentityService } from "./identity.service";
+import { LoginRequest, RefreshTokenRequest } from "./identity.types";
 
-@Controller("identity")
+@Controller("auth")
 export class IdentityController {
   constructor(private identityService: IdentityService) {}
 
-  @Post()
-  createUser(@Body() user: Prisma.IdentityCreateInput) {
+  @UseGuards(LocalAuthGuard)
+  @Post("login")
+  login(@Request() request: LoginRequest) {
+    return this.identityService.loginUser(request.user);
+  }
+
+  @Post("/register")
+  register(@Body() user: RegisterCredentialsDto) {
     return this.identityService.createUser(user);
+  }
+
+  @UseGuards(RefreshJwtGuard)
+  @Post("/refresh")
+  getRefreshToken(@Request() request: RefreshTokenRequest) {
+    return this.identityService.refreshToken(request.user);
   }
 }

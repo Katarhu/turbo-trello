@@ -7,6 +7,7 @@ First step to start working with application is creating environment file in roo
 
 ```shell
 DATABASE_URL=mongodb+srv://<USER_NAME>:<USER_PASSWORD>@cluster0.uq22wsx.mongodb.net/<DATABASE_NAME>
+JWT_SECRET=<SECRET_KEY>
 ```
 
 Replace next fields with your credentials:
@@ -38,6 +39,7 @@ Add environment file next to docker-compose file.
 
 ```shell
 DATABASE_URL=mongodb+srv://<USER_NAME>:<USER_PASSWORD>@cluster0.uq22wsx.mongodb.net/<DATABASE_NAME>
+JWT_SECRET=<SECRET_KEY>
 ```
 
 Run *docker-compose* command with choosed file
