@@ -1,9 +1,9 @@
 
 ## Database setup
 
-First step to start working with application is creating environment file in root directory of this project:
+First step to start working with application is creating environment file in root directory:
 
-**.env.development.local**
+**.env**
 
 ```shell
 DATABASE_URL=mongodb+srv://<USER_NAME>:<USER_PASSWORD>@cluster0.uq22wsx.mongodb.net/<DATABASE_NAME>
@@ -29,3 +29,19 @@ pnpm run db:push
 Current port: **8080**
 
 API Prefix: __v1/api__
+
+## Docker
+
+Add environment file next to docker-compose file.
+
+**.env**
+
+```shell
+DATABASE_URL=mongodb+srv://<USER_NAME>:<USER_PASSWORD>@cluster0.uq22wsx.mongodb.net/<DATABASE_NAME>
+```
+
+Run *docker-compose* command with choosed file
+
+```shell
+docker-compose -f docker-compose.<type>.yml up --build -d 
+```
