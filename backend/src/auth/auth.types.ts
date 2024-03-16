@@ -1,15 +1,15 @@
-import { Identity } from "@prisma/client";
+import { User } from "@prisma/client";
 
 export interface LoginRequest extends Request {
-  user: Identity;
+  user: User;
 }
 
 export interface RefreshTokenRequest extends Request {
-  user: Identity;
+  user: User;
 }
 
 export interface LoginResponse {
-  user: Omit<Identity, "password" | "loginAttempts">;
+  user: Omit<User, "password" | "loginAttempts" | "loginRestrictedUntil">;
   accessToken: string;
   refreshToken: string;
 }

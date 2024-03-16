@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { Identity } from "@prisma/client";
+import { User } from "@prisma/client";
 
 import { JwtConstants } from "../constants/jwt.constants";
 import { JwtPayload } from "../types/jwt.types";
@@ -9,21 +9,21 @@ import { JwtPayload } from "../types/jwt.types";
 export class AppJwtService {
   constructor(private jwtService: JwtService) {}
 
-  private createJwtPayload(identity: Identity): JwtPayload {
+  private createJwtPayload(user: User): JwtPayload {
     return {
-      id: identity.id,
-      email: identity.email,
+      id: user.id,
+      email: user.email,
     };
   }
 
-  createAccessToken(identity: Identity) {
-    const payload = this.createJwtPayload(identity);
+  createAccessToken(user: User) {
+    const payload = this.createJwtPayload(user);
 
     return this.jwtService.sign(payload, { expiresIn: JwtConstants.accessTokenExpireTime });
   }
 
-  createRefreshToken(identity: Identity) {
-    const payload = this.createJwtPayload(identity);
+  createRefreshToken(user: User) {
+    const payload = this.createJwtPayload(user);
 
     return this.jwtService.sign(payload, { expiresIn: JwtConstants.refreshTokenExpireTime });
   }

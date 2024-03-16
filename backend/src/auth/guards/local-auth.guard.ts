@@ -3,7 +3,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { plainToClass } from "class-transformer";
 import { validate } from "class-validator";
 
-import { LoginCredentialsDto } from "~identity/dto/login.credentials.dto";
+import { LoginCredentialsDto } from "../dto/login.credentials.dto";
 
 export class LocalAuthGuard extends AuthGuard("local") {
   async canActivate(context: ExecutionContext) {

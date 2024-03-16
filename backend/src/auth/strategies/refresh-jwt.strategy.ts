@@ -3,12 +3,12 @@ import { PassportStrategy } from "@nestjs/passport";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import * as process from "process";
 
-import { JwtPayload } from "../types/jwt.types";
-import { IdentityService } from "~identity/identity.service";
+import { JwtPayload } from "~core/types/jwt.types";
+import { UserService } from "~user/user.service";
 
 @Injectable()
 export class RefreshJwtStrategy extends PassportStrategy(Strategy, "jwt-refresh") {
-  constructor(private identityService: IdentityService) {
+  constructor(private userService: UserService) {
     super({
       jwtFromRequest: ExtractJwt.fromBodyField("refreshToken"),
       ignoreExpiration: false,
@@ -17,8 +17,6 @@ export class RefreshJwtStrategy extends PassportStrategy(Strategy, "jwt-refresh"
   }
 
   async validate(payload: JwtPayload) {
-    const identity = await this.identityService.getUserByEmail(payload.email);
-
-    return identity;
+    return this.userService.getUserByEmail(payload.email);
   }
 }
