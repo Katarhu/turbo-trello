@@ -1,5 +1,5 @@
 export namespace JwtConstants {
-  export const accessTokenExpireTime = "60s";
+  export const accessTokenExpireTime = "5m";
 
   export const refreshTokenExpireTime = "7d";
 

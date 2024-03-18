@@ -6,7 +6,7 @@ import { AuthConstants } from "~core/constants/auth.constants";
 import { PrismaService } from "~core/prisma/prisma.service";
 
 @Injectable()
-export class UserService {
+export class UserRepository {
   constructor(private prismaService: PrismaService) {}
 
   async createUser(credentials: RegisterUserDto): Promise<User> {

@@ -2,19 +2,19 @@ import { Injectable } from "@nestjs/common";
 import { User } from "@prisma/client";
 
 import { AuthConstants } from "~core/constants/auth.constants";
-import { UserService } from "~user/user.service";
+import { UserRepository } from "~user/user.repository";
 
 import { EncryptionService } from "./encryption.service";
 
 @Injectable()
 export class LoginService {
   constructor(
-    private userService: UserService,
+    private userRepository: UserRepository,
     private encryptionService: EncryptionService
   ) {}
 
   getUserByEmail(email: string) {
-    return this.userService.getUserByEmail(email);
+    return this.userRepository.getUserByEmail(email);
   }
 
   checkIsLoginAttemptsSpent(loginAttempts: number) {
@@ -30,11 +30,11 @@ export class LoginService {
   }
 
   clearLoginRestriction(userId: string) {
-    return this.userService.clearLoginRestriction(userId);
+    return this.userRepository.clearLoginRestriction(userId);
   }
 
   invalidateLoginAttempt(userId: string) {
-    return this.userService.incrementLoginAttempts(userId);
+    return this.userRepository.incrementLoginAttempts(userId);
   }
 
   handleCurrentLoginAttempt(user: User) {
@@ -44,6 +44,6 @@ export class LoginService {
 
     const restrictedUntil = new Date(currentTimeMs + AuthConstants.loginRestrictionTimeMin * 60_000);
 
-    return this.userService.restrictLogin(user, restrictedUntil);
+    return this.userRepository.restrictLogin(user, restrictedUntil);
   }
 }
