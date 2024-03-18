@@ -36,4 +36,18 @@ model Board {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  List      List[]
+}
+
+model List {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+
+  userId String @db.ObjectId
+
+  boardId String @db.ObjectId
+  board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
