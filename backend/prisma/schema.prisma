@@ -50,4 +50,18 @@ model List {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  Task      Task[]
+}
+
+model Task {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+
+  userId String @db.ObjectId
+
+  listId String @db.ObjectId
+  list   List   @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

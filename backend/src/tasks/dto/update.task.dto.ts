@@ -1,10 +1,6 @@
 import { IsNotEmpty, IsString } from "class-validator";
 
-export class CreateListDto {
-  @IsString()
-  @IsNotEmpty()
-  readonly boardId: string;
-
+export class UpdateTaskDto {
   @IsString()
   @IsNotEmpty()
   readonly title: string;

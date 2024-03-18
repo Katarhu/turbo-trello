@@ -12,5 +12,6 @@ import { ListsService } from "./lists.service";
   imports: [PrismaModule, BoardsModule],
   controllers: [ListsController],
   providers: [ListsService, ListsRepository, JwtStrategy],
+  exports: [ListsRepository],
 })
 export class ListsModule {}
