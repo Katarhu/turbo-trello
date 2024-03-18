@@ -4,11 +4,11 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 import * as process from "process";
 
 import { JwtPayload } from "~core/types/jwt.types";
-import { UserService } from "~user/user.service";
+import { UserRepository } from "~user/user.repository";
 
 @Injectable()
 export class RefreshJwtStrategy extends PassportStrategy(Strategy, "jwt-refresh") {
-  constructor(private userService: UserService) {
+  constructor(private userRepository: UserRepository) {
     super({
       jwtFromRequest: ExtractJwt.fromBodyField("refreshToken"),
       ignoreExpiration: false,
@@ -17,6 +17,6 @@ export class RefreshJwtStrategy extends PassportStrategy(Strategy, "jwt-refresh"
   }
 
   async validate(payload: JwtPayload) {
-    return this.userService.getUserByEmail(payload.email);
+    return this.userRepository.getUserByEmail(payload.email);
   }
 }

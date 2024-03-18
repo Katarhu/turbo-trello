@@ -16,11 +16,24 @@ datasource db {
 }
 
 model User {
-  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
-  email                String   @unique
-  password             String
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  email    String @unique
+  password String
+
   loginAttempts        Int      @default(0)
   loginRestrictedUntil DateTime @default("1989-12-31T21:00:00.000Z")
-  isPersonalDataFilled Boolean  @default(false)
-  createdAt            DateTime @default(now())
+
+  createdAt DateTime @default(now())
+  Board     Board[]
+}
+
+model Board {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
