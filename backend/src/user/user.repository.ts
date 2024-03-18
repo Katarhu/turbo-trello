@@ -9,8 +9,12 @@ import { PrismaService } from "~core/prisma/prisma.service";
 export class UserRepository {
   constructor(private prismaService: PrismaService) {}
 
+  private get collection() {
+    return this.prismaService.user;
+  }
+
   async createUser(credentials: RegisterUserDto): Promise<User> {
-    return this.prismaService.user.create({
+    return this.collection.create({
       data: {
         email: credentials.email,
         password: credentials.password,
@@ -19,22 +23,22 @@ export class UserRepository {
   }
 
   getUserByEmail(email: string): Promise<User> {
-    return this.prismaService.user.findUnique({ where: { email } });
+    return this.collection.findUnique({ where: { email } });
   }
 
   incrementLoginAttempts(userId: string): Promise<User> {
-    return this.prismaService.user.update({
+    return this.collection.update({
       where: { id: userId },
       data: { loginAttempts: { increment: 1 } },
     });
   }
 
   restrictLogin(user: User, restrictedUntil: Date) {
-    return this.prismaService.user.update({ where: { id: user.id }, data: { loginRestrictedUntil: restrictedUntil } });
+    return this.collection.update({ where: { id: user.id }, data: { loginRestrictedUntil: restrictedUntil } });
   }
 
   clearLoginRestriction(userId: string) {
-    return this.prismaService.user.update({
+    return this.collection.update({
       where: { id: userId },
       data: { loginAttempts: 0, loginRestrictedUntil: AuthConstants.nullifiedRestrictionUntil },
     });

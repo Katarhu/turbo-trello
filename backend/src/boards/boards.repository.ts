@@ -9,8 +9,12 @@ import { UpdateBoardDto } from "./dto/update.board.dto";
 export class BoardsRepository {
   constructor(private prismaService: PrismaService) {}
 
+  private get collection() {
+    return this.prismaService.board;
+  }
+
   createBoard(userId: string, createBoardDto: CreateBoardDto) {
-    return this.prismaService.board.create({
+    return this.collection.create({
       data: {
         title: createBoardDto.title,
         userId: userId,
@@ -19,18 +23,18 @@ export class BoardsRepository {
   }
 
   getBoards(userId: string) {
-    return this.prismaService.board.findMany({ where: { userId: userId } });
+    return this.collection.findMany({ where: { userId: userId } });
   }
 
   getBoard(boardId: string) {
-    return this.prismaService.board.findUnique({ where: { id: boardId } });
+    return this.collection.findUnique({ where: { id: boardId } });
   }
 
   updateBoard(boardId: string, updateBoardDto: UpdateBoardDto) {
-    return this.prismaService.board.update({ where: { id: boardId }, data: { ...updateBoardDto } });
+    return this.collection.update({ where: { id: boardId }, data: { ...updateBoardDto } });
   }
 
-  async deleteBoard(boardId: string) {
-    return this.prismaService.board.delete({ where: { id: boardId } });
+  deleteBoard(boardId: string) {
+    return this.collection.delete({ where: { id: boardId } });
   }
 }

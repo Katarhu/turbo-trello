@@ -11,5 +11,6 @@ import { BoardsService } from "./boards.service";
   imports: [PrismaModule],
   providers: [BoardsService, BoardsRepository, JwtStrategy],
   controllers: [BoardsController],
+  exports: [BoardsRepository],
 })
 export class BoardsModule {}
