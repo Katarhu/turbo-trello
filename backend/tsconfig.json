@@ -21,7 +21,8 @@
       "~core/*": ["core/*"],
       "~user/*": ["user/*"],
       "~boards/*": ["boards/*"],
-      "~lists/*": ["lists/*"]
+      "~lists/*": ["lists/*"],
+      "~tasks/*": ["tasks/*"]
     }
   }
 }
