@@ -19,7 +19,9 @@
     "baseUrl": "./src",
     "paths": {
       "~core/*": ["core/*"],
-      "~user/*": ["user/*"]
+      "~user/*": ["user/*"],
+      "~boards/*": ["boards/*"],
+      "~lists/*": ["lists/*"]
     }
   }
 }
