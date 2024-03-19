@@ -19,9 +19,8 @@
     "baseUrl": "./src",
     "paths": {
       "~core/*": ["core/*"],
-      "~user/*": ["user/*"],
-      "~boards/*": ["boards/*"],
-      "~lists/*": ["lists/*"]
+      "~config/*": ["config/*"],
+      "~utils/*": ["utils/*"]
     }
   }
 }
