@@ -1,6 +1,8 @@
 import { RequestWithToken } from "~core/types/request.types";
 
-type ListRequestBody = RequestWithToken["body"] & { boardId: string };
+import { AccessBoardDto } from "./dto/access.board.dto";
+
+type ListRequestBody = RequestWithToken["body"] & AccessBoardDto;
 
 export interface ListRequest extends RequestWithToken {
   body: ListRequestBody;

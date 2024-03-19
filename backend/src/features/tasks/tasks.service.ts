@@ -40,7 +40,7 @@ export class TasksService {
     await this.tasksRepository.updateTask(taskId, updateTaskDto);
 
     return {
-      message: "Task was created successfully",
+      message: "Task was updated successfully",
     };
   }
 

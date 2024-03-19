@@ -1,6 +1,8 @@
 import { RequestWithToken } from "~core/types/request.types";
 
-type TaskRequestBody = RequestWithToken["body"] & { listId: string };
+import { AccessListDto } from "./dto/access-list.dto";
+
+type TaskRequestBody = RequestWithToken["body"] & AccessListDto;
 
 export interface TaskRequest extends RequestWithToken {
   body: TaskRequestBody;

@@ -1,7 +1,10 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString, Validate } from "class-validator";
+
+import { IsValidObjectId } from "~utils/validators/is-valid-objectid.validator";
 
 export class AccessBoardDto {
   @IsString()
   @IsNotEmpty()
+  @Validate(IsValidObjectId)
   readonly boardId: string;
 }

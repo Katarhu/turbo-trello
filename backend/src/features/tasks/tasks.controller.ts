@@ -41,7 +41,7 @@ export class TasksController {
 
   @UseGuards(JwtGuard, AccessTaskGuard, AccessListGuard)
   @Patch("/:id")
-  changeTaskList(@Param("id") taskId: string, changeTaskListDto: ChangeTaskListDto) {
+  changeTaskList(@Param("id") taskId: string, @Body() changeTaskListDto: ChangeTaskListDto) {
     return this.tasksService.changeTaskList(taskId, changeTaskListDto);
   }
 

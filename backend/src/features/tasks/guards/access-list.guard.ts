@@ -1,8 +1,10 @@
-import { BadRequestException, CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
+import { BadRequestException, CanActivate, ExecutionContext, HttpStatus, Injectable } from "@nestjs/common";
 import { List } from "@prisma/client";
 
 import { ListsRepository } from "../../lists/lists.repository";
+import { AccessListDto } from "../dto/access-list.dto";
 import { TaskRequest } from "../tasks.types";
+import { validateBody } from "~utils/functions/validate-body";
 
 @Injectable()
 export class AccessListGuard implements CanActivate {
@@ -22,6 +24,15 @@ export class AccessListGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: TaskRequest = context.switchToHttp().getRequest();
+
+    const errorMessages = await validateBody(AccessListDto, request.body);
+
+    if (errorMessages.length > 0)
+      throw new BadRequestException({
+        message: errorMessages,
+        error: "Bad request",
+        status: HttpStatus.BAD_REQUEST,
+      });
 
     const list = await this.getList(request.body.listId);
 

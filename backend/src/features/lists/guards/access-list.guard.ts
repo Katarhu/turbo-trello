@@ -2,6 +2,7 @@ import { BadRequestException, CanActivate, ExecutionContext, Injectable } from "
 
 import { ListsRepository } from "../lists.repository";
 import { TargetedRequestWithToken } from "~core/types/request.types";
+import { isValidObjectId } from "~utils/functions/is-valid-objectid";
 
 @Injectable()
 export class AccessListGuard implements CanActivate {
@@ -21,6 +22,8 @@ export class AccessListGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request: TargetedRequestWithToken = context.switchToHttp().getRequest();
+
+    if (!isValidObjectId(request.params.id)) throw new BadRequestException({ message: "Id should be valid objectId" });
 
     const list = await this.getList(request.params.id);
 

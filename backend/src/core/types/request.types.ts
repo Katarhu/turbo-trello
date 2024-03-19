@@ -6,6 +6,6 @@ export interface RequestWithToken extends Request {
 
 export interface TargetedRequestWithToken extends RequestWithToken {
   params: {
-    id: string;
+    id?: string;
   };
 }
