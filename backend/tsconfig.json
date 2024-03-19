@@ -22,7 +22,8 @@
       "~user/*": ["user/*"],
       "~boards/*": ["boards/*"],
       "~lists/*": ["lists/*"],
-      "~tasks/*": ["tasks/*"]
+      "~tasks/*": ["tasks/*"],
+      "~config/*": ["config/*"]
     }
   }
 }

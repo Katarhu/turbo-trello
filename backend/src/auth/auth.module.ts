@@ -2,10 +2,10 @@ import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 import { PassportModule } from "@nestjs/passport";
 
-import { JwtConstants } from "~core/constants/jwt.constants";
+import { UserModule } from "../user/user.module";
+import { JwtConfig } from "~config/jwt.config";
 import { PrismaModule } from "~core/prisma/prisma.module";
 import { AppJwtService } from "~core/services/app.jwt.service";
-import { UserModule } from "~user/user.module";
 
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
@@ -20,7 +20,7 @@ import { RefreshJwtStrategy } from "./strategies/refresh-jwt.strategy";
     PassportModule,
     UserModule,
     JwtModule.register({
-      secret: process.env[JwtConstants.secretTokenEnvKey],
+      secret: process.env[JwtConfig.secretTokenEnvKey],
     }),
   ],
   controllers: [AuthController],

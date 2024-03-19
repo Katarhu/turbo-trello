@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { User } from "@prisma/client";
 
-import { AuthConstants } from "~core/constants/auth.constants";
-import { UserRepository } from "~user/user.repository";
+import { UserRepository } from "../user/user.repository";
+import { LoginConfig } from "~config/login.config";
 
 import { EncryptionService } from "./encryption.service";
 
@@ -18,7 +18,7 @@ export class LoginService {
   }
 
   checkIsLoginAttemptsSpent(loginAttempts: number) {
-    return loginAttempts >= AuthConstants.maximumLoginAttempts;
+    return loginAttempts >= LoginConfig.maximumLoginAttempts;
   }
 
   checkIsRestrictionContinues(loginRestrictedUntil: Date) {
@@ -38,11 +38,11 @@ export class LoginService {
   }
 
   handleCurrentLoginAttempt(user: User) {
-    if (user.loginAttempts !== AuthConstants.maximumLoginAttempts) return;
+    if (user.loginAttempts !== LoginConfig.maximumLoginAttempts) return;
 
     const currentTimeMs = new Date().getTime();
 
-    const restrictedUntil = new Date(currentTimeMs + AuthConstants.loginRestrictionTimeMin * 60_000);
+    const restrictedUntil = new Date(currentTimeMs + LoginConfig.loginRestrictionTimeMin * 60_000);
 
     return this.userRepository.restrictLogin(user, restrictedUntil);
   }

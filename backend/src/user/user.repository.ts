@@ -2,7 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { User } from "@prisma/client";
 
 import { RegisterUserDto } from "../auth/dto/register.credentials.dto";
-import { AuthConstants } from "~core/constants/auth.constants";
+import { LoginConfig } from "~config/login.config";
 import { PrismaService } from "~core/prisma/prisma.service";
 
 @Injectable()
@@ -40,7 +40,7 @@ export class UserRepository {
   clearLoginRestriction(userId: string) {
     return this.collection.update({
       where: { id: userId },
-      data: { loginAttempts: 0, loginRestrictedUntil: AuthConstants.nullifiedRestrictionUntil },
+      data: { loginAttempts: 0, loginRestrictedUntil: LoginConfig.nullifiedRestrictionUntil },
     });
   }
 }

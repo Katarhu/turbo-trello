@@ -1,4 +1,4 @@
-export namespace AuthConstants {
+export namespace LoginConfig {
   export const bcryptHash = 10;
 
   export const maximumLoginAttempts = 5;

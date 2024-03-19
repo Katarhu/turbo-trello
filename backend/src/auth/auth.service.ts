@@ -1,8 +1,8 @@
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { User } from "@prisma/client";
 
+import { UserRepository } from "../user/user.repository";
 import { AppJwtService } from "~core/services/app.jwt.service";
-import { UserRepository } from "~user/user.repository";
 
 import { LoginResponse, RefreshTokenResponse } from "./auth.types";
 import { RegisterUserDto } from "./dto/register.credentials.dto";

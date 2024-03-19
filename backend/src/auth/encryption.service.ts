@@ -1,12 +1,12 @@
 import { Injectable } from "@nestjs/common";
 import * as bcrypt from "bcrypt";
 
-import { AuthConstants } from "~core/constants/auth.constants";
+import { LoginConfig } from "~config/login.config";
 
 @Injectable()
 export class EncryptionService {
   encryptPassword(password: string) {
-    return bcrypt.hash(password, AuthConstants.bcryptHash);
+    return bcrypt.hash(password, LoginConfig.bcryptHash);
   }
 
   comparePasswords(incomingPassword: string, actualPassword: string) {
