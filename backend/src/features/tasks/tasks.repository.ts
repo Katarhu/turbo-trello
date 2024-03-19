@@ -37,7 +37,7 @@ export class TasksRepository {
   }
 
   changeTaskList(id: string, changeTaskListDto: ChangeTaskListDto) {
-    return this.collection.update({ where: { id }, data: { listId: changeTaskListDto.newListId } });
+    return this.collection.update({ where: { id }, data: { listId: changeTaskListDto.listId } });
   }
 
   deleteTask(id: string) {

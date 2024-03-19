@@ -1,8 +1,8 @@
 import { Module } from "@nestjs/common";
 
+import { ListsModule } from "../lists/lists.module";
 import { PrismaModule } from "~core/prisma/prisma.module";
 import { JwtStrategy } from "~core/strategies/jwt.strategy";
-import { ListsModule } from "~lists/lists.module";
 
 import { TasksController } from "./tasks.controller";
 import { TasksRepository } from "./tasks.repository";

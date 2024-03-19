@@ -1,7 +1,7 @@
 import { BadRequestException, CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 
-import { BoardsRepository } from "~boards/boards.repository";
-import { ListRequest } from "~lists/lists.types";
+import { BoardsRepository } from "../../boards/boards.repository";
+import { ListRequest } from "../lists.types";
 
 @Injectable()
 export class AccessBoardGuard implements CanActivate {

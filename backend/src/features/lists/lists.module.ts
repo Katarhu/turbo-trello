@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 
-import { BoardsModule } from "~boards/boards.module";
+import { BoardsModule } from "../boards/boards.module";
 import { PrismaModule } from "~core/prisma/prisma.module";
 import { JwtStrategy } from "~core/strategies/jwt.strategy";
 

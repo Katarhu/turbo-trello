@@ -1,9 +1,9 @@
 import { Module } from "@nestjs/common";
 
-import { AuthModule } from "./auth/auth.module";
-import { BoardsModule } from "./boards/boards.module";
-import { ListsModule } from "./lists/lists.module";
-import { TasksModule } from "./tasks/tasks.module";
+import { AuthModule } from "./features/auth/auth.module";
+import { BoardsModule } from "./features/boards/boards.module";
+import { ListsModule } from "./features/lists/lists.module";
+import { TasksModule } from "./features/tasks/tasks.module";
 
 @Module({
   imports: [AuthModule, BoardsModule, ListsModule, TasksModule],

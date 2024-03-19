@@ -1,8 +1,8 @@
 import { BadRequestException, CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { List } from "@prisma/client";
 
+import { ListsRepository } from "../../lists/lists.repository";
 import { TaskRequest } from "../tasks.types";
-import { ListsRepository } from "~lists/lists.repository";
 
 @Injectable()
 export class AccessListGuard implements CanActivate {
