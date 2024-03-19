@@ -5,6 +5,7 @@ import { UserRepository } from "../user/user.repository";
 import { LoginConfig } from "~config/login.config";
 
 import { EncryptionService } from "./encryption.service";
+import { LoginFunctions } from "./login.functions";
 
 @Injectable()
 export class LoginService {
@@ -40,9 +41,7 @@ export class LoginService {
   handleCurrentLoginAttempt(user: User) {
     if (user.loginAttempts !== LoginConfig.maximumLoginAttempts) return;
 
-    const currentTimeMs = new Date().getTime();
-
-    const restrictedUntil = new Date(currentTimeMs + LoginConfig.loginRestrictionTimeMin * 60_000);
+    const restrictedUntil = LoginFunctions.generateRestrictionTime(LoginConfig.loginRestrictionTimeMin);
 
     return this.userRepository.restrictLogin(user, restrictedUntil);
   }
