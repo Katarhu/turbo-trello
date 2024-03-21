@@ -11,7 +11,8 @@ export const LoginPage = () => {
 
   return (
     <div>
-      <Typography>{translate("test")}</Typography>
+      <Typography>{translate("polution")}</Typography>
+      <Typography>{translate("login")}</Typography>
       <button onClick={() => LanguageService.changeLanguage(AppLanguage.UK)}>Українська</button>
       <button onClick={() => LanguageService.changeLanguage(AppLanguage.EN)}>English</button>
     </div>

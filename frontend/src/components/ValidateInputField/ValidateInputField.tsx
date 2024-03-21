@@ -2,8 +2,8 @@ import { TextField, BaseTextFieldProps } from "@mui/material";
 import { FieldError, UseFormRegisterReturn } from "react-hook-form";
 
 interface ValidatedInputFieldProps extends Omit<BaseTextFieldProps, "error"> {
-  error?: FieldError;
-  register?: UseFormRegisterReturn;
+  error: FieldError;
+  register: UseFormRegisterReturn;
   label: string;
 }
 
@@ -11,7 +11,6 @@ export const ValidatedInputField = ({ error, register, label, ...props }: Valida
   return (
     <TextField
       error={error ? true : false}
-      id="validated-input"
       label={label}
       {...register}
       {...props}
