@@ -29,7 +29,8 @@
       "~pages/*": ["pages/*"],
       "~types/*": ["types/*"],
       "~core/*": ["core/*"],
-      "~utils/*": ["utils/*"]
+      "~utils/*": ["utils/*"],
+      "~models/*": ["models/*"]
     }
   },
   "include": [
