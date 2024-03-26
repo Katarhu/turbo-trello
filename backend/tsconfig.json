@@ -18,9 +18,11 @@
     "noFallthroughCasesInSwitch": false,
     "baseUrl": "./src",
     "paths": {
-      "~core/*": ["core/*"],
+      "~common/*": ["common/*"],
       "~config/*": ["config/*"],
-      "~utils/*": ["utils/*"]
+      "~utils/*": ["utils/*"],
+      "~features/*": ["features/*"],
+      "~prisma/*": ["prisma/*"]
     }
   }
 }

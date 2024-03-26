@@ -10,58 +10,18 @@ generator client {
 }
 
 datasource db {
-  provider     = "mongodb"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  id Int @id @default(autoincrement())
+
   email    String @unique
   password String
 
-  loginAttempts        Int      @default(0)
-  loginRestrictedUntil DateTime @default("1989-12-31T21:00:00.000Z")
+  unsuccessfulLoginAttemptsCount Int      @default(0)
+  banStartTime                   DateTime @default("1989-12-31T21:00:00.000Z")
 
   createdAt DateTime @default(now())
-  Board     Board[]
-}
-
-model Board {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-
-  userId String @db.ObjectId
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  List      List[]
-}
-
-model List {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-
-  userId String @db.ObjectId
-
-  boardId String @db.ObjectId
-  board   Board  @relation(fields: [boardId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Task      Task[]
-}
-
-model Task {
-  id    String @id @default(auto()) @map("_id") @db.ObjectId
-  title String
-
-  userId String @db.ObjectId
-
-  listId String @db.ObjectId
-  list   List   @relation(fields: [listId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }
