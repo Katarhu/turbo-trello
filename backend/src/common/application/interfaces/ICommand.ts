@@ -1,3 +1,3 @@
 export abstract class ICommand<TInput, TOutput> {
-  abstract execute(input: TInput): Promise<TOutput>;
+  abstract execute(request: TInput): Promise<TOutput>;
 }

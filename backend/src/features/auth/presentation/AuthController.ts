@@ -1,12 +1,16 @@
 import { Body, Controller, Inject, Post } from "@nestjs/common";
 
-import { ILoginUserCommand } from "~features/auth/application/commands/ILoginUserCommand";
+import { TokenConfig } from "~config/TokenConfig";
+import { ILoginUserCommand } from "~features/auth/application/commands/Login/ILoginUserCommand";
+import { IRefreshTokenCommand } from "~features/auth/application/commands/Token/IRefreshTokenCommand";
 import { LoginUserRequest } from "~features/auth/application/requests/LoginUserRequest";
 import { RegisterUserRequest } from "~features/auth/application/requests/RegisterUserRequest";
 import { LoginUserResponse } from "~features/auth/application/responces/LoginUserResponse";
+import { RefreshTokenResponce } from "~features/auth/application/responces/RefreshTokenResponce";
 import { AuthCommandToken } from "~features/auth/common/diTokens";
 import { ICreateUserCommand } from "~features/user/application/commands/ICreateUserCommand";
 import { UserCommandToken } from "~features/user/common/diTokens";
+import { Cookies } from "~utils/decorators/CookieDecorator";
 
 @Controller("/auth")
 export class AuthController {
@@ -16,13 +20,21 @@ export class AuthController {
   @Inject(AuthCommandToken.LOGIN_USER_COMMAND)
   private _loginUserCommand: ILoginUserCommand;
 
+  @Inject(AuthCommandToken.REFRESH_TOKEN_COMMAND)
+  private _refreshTokenCommand: IRefreshTokenCommand;
+
   @Post("/register")
-  async register(@Body() dto: RegisterUserRequest) {
+  async register(@Body() dto: RegisterUserRequest): Promise<void> {
     await this._createUserCommand.execute(dto);
   }
 
   @Post("/login")
   async login(@Body() dto: LoginUserRequest): Promise<LoginUserResponse> {
     return await this._loginUserCommand.execute(dto);
+  }
+
+  @Post("/refresh")
+  async refreshAccessToken(@Cookies(TokenConfig.cookieTokenKey) refreshToken: string): Promise<RefreshTokenResponce> {
+    return await this._refreshTokenCommand.execute(refreshToken);
   }
 }

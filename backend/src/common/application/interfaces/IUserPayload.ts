@@ -1,4 +1,4 @@
-export interface ITokenPayload {
+export interface IUserPayload {
   id: number;
   email: string;
 }

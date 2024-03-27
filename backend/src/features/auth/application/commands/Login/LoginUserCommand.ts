@@ -1,6 +1,6 @@
 import { Inject, Injectable, Scope } from "@nestjs/common";
 
-import { ILoginUserCommand } from "~features/auth/application/commands/ILoginUserCommand";
+import { ILoginUserCommand } from "~features/auth/application/commands/Login/ILoginUserCommand";
 import { LoginUserRequest } from "~features/auth/application/requests/LoginUserRequest";
 import { LoginUserResponse } from "~features/auth/application/responces/LoginUserResponse";
 import { IAuthService } from "~features/auth/application/services/AuthService/IAuthService";

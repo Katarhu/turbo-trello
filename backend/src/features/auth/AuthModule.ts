@@ -2,8 +2,9 @@ import { Module } from "@nestjs/common";
 import { JwtModule } from "@nestjs/jwt";
 
 import { CommonModule } from "~common/CommonModule";
-import { JwtConfig } from "~config/JwtConfig";
-import { LoginUserCommand } from "~features/auth/application/commands/LoginUserCommand";
+import { TokenConfig } from "~config/TokenConfig";
+import { LoginUserCommand } from "~features/auth/application/commands/Login/LoginUserCommand";
+import { RefreshTokenCommand } from "~features/auth/application/commands/Token/RefreshTokenCommand";
 import { AuthService } from "~features/auth/application/services/AuthService/AuthService";
 import { TokenService } from "~features/auth/application/services/TokenService/TokenService";
 import { UserModule } from "~features/user/UserModule";
@@ -20,7 +21,7 @@ import { AuthController } from "./presentation/AuthController";
     PrismaModule,
     CommonModule,
     JwtModule.register({
-      secret: process.env[JwtConfig.secretTokenEnvKey],
+      secret: process.env[TokenConfig.secretTokenEnvKey],
     }),
   ],
   controllers: [AuthController],
@@ -29,6 +30,7 @@ import { AuthController } from "./presentation/AuthController";
     createProvider(AuthServiceToken.TOKEN_SERVICE, TokenService),
     createProvider(AuthRepositoryToken.LOGIN_ATTEMPT_REPOSITORY, LoginAttemptRepository),
     createProvider(AuthCommandToken.LOGIN_USER_COMMAND, LoginUserCommand),
+    createProvider(AuthCommandToken.REFRESH_TOKEN_COMMAND, RefreshTokenCommand),
   ],
 })
 export class AuthModule {}
