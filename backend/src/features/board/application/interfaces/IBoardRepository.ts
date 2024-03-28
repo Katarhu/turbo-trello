@@ -5,7 +5,7 @@ import { Board } from "~features/board/domain/BoardEntity";
 export interface IBoardRepository {
   create(dto: ICreateBoard): Promise<Board>;
 
-  findMany(userId: number): Promise<Board[]>;
+  getManyByUserId(userId: number): Promise<Board[]>;
 
   update(id: number, dto: IUpdateBoard): Promise<Board>;
 

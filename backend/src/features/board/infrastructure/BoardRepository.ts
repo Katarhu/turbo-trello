@@ -33,12 +33,10 @@ export class BoardRepository implements IBoardRepository {
     return BoardMapper.toEntity(board);
   }
 
-  async findMany(userId: number): Promise<Board[]> {
+  async getManyByUserId(userId: number): Promise<Board[]> {
     const boards = await this.collection.findMany({ where: { userId } });
 
-    const entities = boards.map(BoardMapper.toEntity);
-
-    return entities;
+    return boards.map(BoardMapper.toEntity);
   }
 
   async getById(id: number): Promise<Board> {

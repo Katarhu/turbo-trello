@@ -2,19 +2,22 @@ import { Inject, Injectable, Scope } from "@nestjs/common";
 
 import { ICreateBoardCommand } from "~features/board/application/commands/CreateBoard/ICreateBoardCommand";
 import { CreateBoardDto } from "~features/board/application/dto/CreateBoardDto";
+import { IBoardRepository } from "~features/board/application/interfaces/IBoardRepository";
 import { BoardMapper } from "~features/board/application/mappers/BoardMapper";
 import { CreateBoardResponse } from "~features/board/application/responses/CreateBoardResponse";
-import { IBoardService } from "~features/board/application/services/IBoardService";
-import { BoardServiceToken } from "~features/board/diTokens";
+import { BoardRepositoryToken } from "~features/board/diTokens";
 
 @Injectable({ scope: Scope.REQUEST })
 export class CreateBoardCommand implements ICreateBoardCommand {
-  @Inject(BoardServiceToken.BOARD_SERVICE)
-  private _boardService: IBoardService;
+  @Inject(BoardRepositoryToken.BOARD_REPOSITORY)
+  private _boardRepository: IBoardRepository;
 
-  async execute(request: CreateBoardDto): Promise<CreateBoardResponse> {
-    const board = await this._boardService.create(request);
+  async execute(dto: CreateBoardDto): Promise<CreateBoardResponse> {
+    const newBoard = await this._boardRepository.create({
+      title: dto.title,
+      userId: dto.userId,
+    });
 
-    return new CreateBoardResponse(BoardMapper.toDto(board));
+    return new CreateBoardResponse(BoardMapper.toDto(newBoard));
   }
 }

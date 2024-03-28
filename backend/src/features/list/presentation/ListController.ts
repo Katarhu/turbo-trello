@@ -14,6 +14,7 @@ import { UpdateListRequest } from "~features/list/application/requests/UpdateLis
 import { ListCommandToken, ListQueryToken } from "~features/list/diTokens";
 import { TokenPayload } from "~utils/decorators/TokenPayloadDecorator";
 
+@UseGuards(TokenGuard)
 @Controller("/lists")
 export class ListController {
   @Inject(ListCommandToken.CREATE_LIST_COMMAND)
@@ -31,17 +32,15 @@ export class ListController {
   @Inject(ListQueryToken.GET_LISTS_QUERY)
   private _getListsQuery: IGetListsQuery;
 
-  @UseGuards(TokenGuard)
   @Post()
-  async createList(@Body() createListRequest: CreateListRequest, @TokenPayload() user: IUserPayload) {
+  async createList(@Body() body: CreateListRequest, @TokenPayload() user: IUserPayload) {
     return await this._createListCommand.execute({
-      title: createListRequest.title,
-      boardId: createListRequest.boardId,
+      title: body.title,
+      boardId: body.boardId,
       userId: user.id,
     });
   }
 
-  @UseGuards(TokenGuard)
   @Delete("/:id")
   async deleteList(@Param() params: RequestParams, @TokenPayload() user: IUserPayload) {
     return await this._deleteListCommand.execute({
@@ -50,21 +49,19 @@ export class ListController {
     });
   }
 
-  @UseGuards(TokenGuard)
   @Put("/:id")
   async updateList(
     @Param() params: RequestParams,
-    @Body() updateListRequest: UpdateListRequest,
+    @Body() body: UpdateListRequest,
     @TokenPayload() user: IUserPayload
   ) {
     return await this._updateListCommand.execute({
       id: params.id,
-      title: updateListRequest.title,
+      title: body.title,
       userId: user.id,
     });
   }
 
-  @UseGuards(TokenGuard)
   @Get("/:id")
   async getList(@Param() params: RequestParams, @TokenPayload() user: IUserPayload) {
     return await this._getListQuery.execute({
@@ -73,11 +70,10 @@ export class ListController {
     });
   }
 
-  @UseGuards(TokenGuard)
   @Post()
-  async getLists(@Body() getListsRequest: GetListsRequest, @TokenPayload() user: IUserPayload) {
+  async getLists(@Body() body: GetListsRequest, @TokenPayload() user: IUserPayload) {
     return await this._getListsQuery.execute({
-      boardId: getListsRequest.boardId,
+      boardId: body.boardId,
       userId: user.id,
     });
   }

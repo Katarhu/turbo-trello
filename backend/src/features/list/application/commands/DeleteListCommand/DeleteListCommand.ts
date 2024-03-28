@@ -1,22 +1,26 @@
 import { Inject, Injectable, Scope } from "@nestjs/common";
 
+import { ForbiddenError } from "~common/application/errors/ForbiddenError";
 import { IDeleteListCommand } from "~features/list/application/commands/DeleteListCommand/IDeleteListCommand";
 import { DeleteListDto } from "~features/list/application/dto/DeleteListDto";
+import { ListNotFoundError } from "~features/list/application/error/ListNotFoundError";
+import { IListRepository } from "~features/list/application/interfaces/IListRepository";
 import { DeleteListResponse } from "~features/list/application/responses/DeleteListResponse";
-import { IListService } from "~features/list/application/services/IListService";
-import { ListServiceToken } from "~features/list/diTokens";
+import { ListRepositoryToken } from "~features/list/diTokens";
 
 @Injectable({ scope: Scope.REQUEST })
 export class DeleteListCommand implements IDeleteListCommand {
-  @Inject(ListServiceToken.LIST_SERVICE)
-  private _listService: IListService;
+  @Inject(ListRepositoryToken.LISTS_REPOSITORY)
+  private _listRepository: IListRepository;
 
   async execute(dto: DeleteListDto): Promise<DeleteListResponse> {
-    const list = await this._listService.getById(dto.id);
+    const list = await this._listRepository.getById(dto.id);
 
-    this._listService.validateAccess(dto.userId, list);
+    if (!list) throw new ListNotFoundError();
 
-    await this._listService.delete(dto.id);
+    if (list.userId !== dto.userId) throw new ForbiddenError();
+
+    await this._listRepository.delete(dto.id);
 
     return new DeleteListResponse();
   }

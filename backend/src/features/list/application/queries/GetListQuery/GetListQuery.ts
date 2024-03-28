@@ -1,21 +1,25 @@
 import { Inject, Injectable, Scope } from "@nestjs/common";
 
+import { ForbiddenError } from "~common/application/errors/ForbiddenError";
 import { GetListDto } from "~features/list/application/dto/GetListDto";
+import { ListNotFoundError } from "~features/list/application/error/ListNotFoundError";
+import { IListRepository } from "~features/list/application/interfaces/IListRepository";
 import { ListMapper } from "~features/list/application/mappers/ListMapper";
 import { IGetListQuery } from "~features/list/application/queries/GetListQuery/IGetListQuery";
 import { GetListResponse } from "~features/list/application/responses/GetListResponse";
-import { IListService } from "~features/list/application/services/IListService";
-import { ListServiceToken } from "~features/list/diTokens";
+import { ListRepositoryToken } from "~features/list/diTokens";
 
 @Injectable({ scope: Scope.REQUEST })
 export class GetListQuery implements IGetListQuery {
-  @Inject(ListServiceToken.LIST_SERVICE)
-  private _listService: IListService;
+  @Inject(ListRepositoryToken.LISTS_REPOSITORY)
+  private _listRepository: IListRepository;
 
   async execute(dto: GetListDto): Promise<GetListResponse> {
-    const list = await this._listService.getById(dto.id);
+    const list = await this._listRepository.getById(dto.id);
 
-    this._listService.validateAccess(dto.userId, list);
+    if (!list) throw new ListNotFoundError();
+
+    if (list.userId !== dto.userId) throw new ForbiddenError();
 
     return new GetListResponse(ListMapper.toDto(list));
   }

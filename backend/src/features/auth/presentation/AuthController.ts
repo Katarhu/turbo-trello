@@ -24,13 +24,13 @@ export class AuthController {
   private _refreshTokenCommand: IRefreshTokenCommand;
 
   @Post("/register")
-  async register(@Body() dto: RegisterUserRequest): Promise<void> {
-    await this._createUserCommand.execute(dto);
+  async register(@Body() body: RegisterUserRequest): Promise<void> {
+    await this._createUserCommand.execute(body);
   }
 
   @Post("/login")
-  async login(@Body() dto: LoginUserRequest): Promise<LoginUserResponse> {
-    return await this._loginUserCommand.execute(dto);
+  async login(@Body() body: LoginUserRequest): Promise<LoginUserResponse> {
+    return await this._loginUserCommand.execute(body);
   }
 
   @Post("/refresh")

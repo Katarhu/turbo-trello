@@ -13,6 +13,7 @@ import { UpdateBoardRequest } from "~features/board/application/requests/UpdateB
 import { BoardCommandToken, BoardQueryToken } from "~features/board/diTokens";
 import { TokenPayload } from "~utils/decorators/TokenPayloadDecorator";
 
+@UseGuards(TokenGuard)
 @Controller("/boards")
 export class BoardController {
   @Inject(BoardCommandToken.CREATE_BOARD_COMMAND)
@@ -30,7 +31,6 @@ export class BoardController {
   @Inject(BoardQueryToken.GET_BOARDS_QUERY)
   private _getBoardsQuery: IGetBoardsQuery;
 
-  @UseGuards(TokenGuard)
   @Post()
   async createBoard(@Body() body: CreateBoardRequest, @TokenPayload() user: IUserPayload) {
     return await this._createBoardCommand.execute({
@@ -39,7 +39,6 @@ export class BoardController {
     });
   }
 
-  @UseGuards(TokenGuard)
   @Put("/:id")
   async updateBoard(
     @Param() params: RequestParams,
@@ -53,7 +52,6 @@ export class BoardController {
     });
   }
 
-  @UseGuards(TokenGuard)
   @Delete("/:id")
   async deleteBoard(@Param() params: RequestParams, @TokenPayload() user: IUserPayload) {
     return await this._deleteBoardCommand.execute({
@@ -62,7 +60,6 @@ export class BoardController {
     });
   }
 
-  @UseGuards(TokenGuard)
   @Get("/:id")
   async getBoard(@Param() params: RequestParams, @TokenPayload() user: IUserPayload) {
     return await this._getBoardQuery.execute({
@@ -71,7 +68,6 @@ export class BoardController {
     });
   }
 
-  @UseGuards(TokenGuard)
   @Post()
   async getBoards(@TokenPayload() user: IUserPayload) {
     return await this._getBoardsQuery.execute({
