@@ -1,11 +1,8 @@
-import { LoggedInUserDto } from "~features/auth/application/dto/Login/LoggedInUserDto";
-import { LoginAttemptDto } from "~features/auth/application/dto/Login/LoginAttemptDto";
-import { LoginUserRequest } from "~features/auth/application/requests/LoginUserRequest";
+import { LoginDto } from "~features/auth/application/dto/LoginDto";
+import { User } from "~features/user/domain/UserEntity";
 
 export interface IAuthService {
-  getUserByEmail(email: string): Promise<LoginAttemptDto>;
+  getUserByEmail(email: string): Promise<User>;
 
-  getLoggedInUser(email: string): Promise<LoggedInUserDto>;
-
-  validateLoginAttempt(user: LoginAttemptDto, input: LoginUserRequest): Promise<void>;
+  validateLoginAttempt(user: User, input: LoginDto): Promise<void>;
 }

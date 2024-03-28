@@ -1,6 +1,5 @@
 import { ICommand } from "~common/application/interfaces/ICommand";
-import { RefreshTokenResponce } from "~features/auth/application/responces/RefreshTokenResponce";
+import { RefreshTokenDto } from "~features/auth/application/dto/RefreshTokenDto";
+import { RefreshTokenResponse } from "~features/auth/application/responses/RefreshTokenResponce";
 
-export abstract class IRefreshTokenCommand extends ICommand<string, RefreshTokenResponce> {
-  abstract execute(input: string): Promise<RefreshTokenResponce>;
-}
+export abstract class IRefreshTokenCommand extends ICommand<RefreshTokenDto, RefreshTokenResponse> {}

@@ -5,7 +5,7 @@ import { CommonServiceToken } from "~common/diTokens";
 import { RegisterUserRequest } from "~features/auth/application/requests/RegisterUserRequest";
 import { IUserRepository } from "~features/user/application/interfaces/IUserRepository";
 import { IUserService } from "~features/user/application/services/IUserService";
-import { UserRepositoryToken } from "~features/user/common/diTokens";
+import { UserRepositoryToken } from "~features/user/diTokens";
 
 export class UserService implements IUserService {
   @Inject(UserRepositoryToken.USER_REPOSITORY)

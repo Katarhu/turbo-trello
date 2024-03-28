@@ -3,35 +3,34 @@ import { BadRequestException, ForbiddenException, Inject } from "@nestjs/common"
 import { ICryptoService } from "~common/application/services/CryptoService/ICryptoService";
 import { CommonServiceToken } from "~common/diTokens";
 import { LoginConfig } from "~config/LoginConfig";
-import { LoggedInUserDto } from "~features/auth/application/dto/Login/LoggedInUserDto";
-import { LoginAttemptDto } from "~features/auth/application/dto/Login/LoginAttemptDto";
 import { calculateRemainingBanTime } from "~features/auth/application/helpers/calculateRemainingBanTime";
 import { checkIsBanned } from "~features/auth/application/helpers/checkIsBanned";
 import { createBanTime } from "~features/auth/application/helpers/createBanTime";
 import { formatTime, TimeFormat } from "~features/auth/application/helpers/formatTime";
-import { ILoginAttemptRepository } from "~features/auth/application/interfaces/ILoginAttemptRepository";
 import { LoginUserRequest } from "~features/auth/application/requests/LoginUserRequest";
-import { AuthRepositoryToken } from "~features/auth/common/diTokens";
+import { IUserRepository } from "~features/user/application/interfaces/IUserRepository";
+import { UserRepositoryToken } from "~features/user/diTokens";
 import { LoginAttempt } from "~features/user/domain/LoginAttemptValueObject";
+import { User } from "~features/user/domain/UserEntity";
 
 import { IAuthService } from "./IAuthService";
 
 export class AuthService implements IAuthService {
-  @Inject(AuthRepositoryToken.LOGIN_ATTEMPT_REPOSITORY)
-  private _loginAttemptRepository: ILoginAttemptRepository;
+  @Inject(UserRepositoryToken.USER_REPOSITORY)
+  private _userRepository: IUserRepository;
 
   @Inject(CommonServiceToken.CRYPTO_SERVICE)
   private _cryptoService: ICryptoService;
 
   async getUserByEmail(email: string) {
-    const user = await this._loginAttemptRepository.getUserByEmail(email);
+    const user = await this._userRepository.getByEmail(email);
 
     if (!user) throw new BadRequestException({ message: "Email or password is incorrect" });
 
     return user;
   }
 
-  async validateLoginAttempt(user: LoginAttemptDto, request: LoginUserRequest) {
+  async validateLoginAttempt(user: User, request: LoginUserRequest) {
     const newLoginAttempt = this.validateCurrentAttemptState(user);
 
     const isPasswordCorrect = await this._cryptoService.compare(request.password, user.password);
@@ -45,11 +44,7 @@ export class AuthService implements IAuthService {
     throw new BadRequestException({ message: "Email or password is incorrect" });
   }
 
-  async getLoggedInUser(email: string): Promise<LoggedInUserDto> {
-    return await this._loginAttemptRepository.getLoggedInUser(email);
-  }
-
-  private validateCurrentAttemptState(user: LoginAttemptDto): LoginAttempt {
+  private validateCurrentAttemptState(user: User): LoginAttempt {
     const isLoginRestricted = checkIsBanned(user.banStartTime, LoginConfig.loginRestrictionTimeMs);
 
     if (isLoginRestricted) {
@@ -64,7 +59,7 @@ export class AuthService implements IAuthService {
     return new LoginAttempt(user.unsuccessfulLoginAttemptsCount, user.banStartTime);
   }
 
-  private async saveNewLoginAttempt(user: LoginAttemptDto, loginAttempt: LoginAttempt) {
+  private async saveNewLoginAttempt(user: User, loginAttempt: LoginAttempt) {
     if (loginAttempt.unsuccessfulLoginAttemptsCount === LoginConfig.maximumLoginAttempts) {
       const newBanTime = createBanTime();
 
@@ -72,6 +67,6 @@ export class AuthService implements IAuthService {
       loginAttempt.clearLoginAttempts();
     }
 
-    await this._loginAttemptRepository.saveNewLoginAttempt(user.id, loginAttempt);
+    await this._userRepository.saveNewLoginAttempt(user.id, loginAttempt);
   }
 }

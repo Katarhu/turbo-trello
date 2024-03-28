@@ -1,7 +1,5 @@
 import { ICommand } from "~common/application/interfaces/ICommand";
-import { RegisterUserRequest } from "~features/auth/application/requests/RegisterUserRequest";
-import { RegisterUserResponse } from "~features/auth/application/responces/RegisterUserResponse";
+import { RegisterUserResponse } from "~features/auth/application/responses/RegisterUserResponse";
+import { CreateUserDto } from "~features/user/application/dto/CreateUserDto";
 
-export abstract class ICreateUserCommand implements ICommand<RegisterUserRequest, RegisterUserResponse> {
-  abstract execute(input: RegisterUserRequest): Promise<RegisterUserResponse>;
-}
+export abstract class ICreateUserCommand extends ICommand<CreateUserDto, RegisterUserResponse> {}

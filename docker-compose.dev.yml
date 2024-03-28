@@ -3,6 +3,8 @@ name: "trello-turbo"
 services:
   nestjs_dev:
     container_name: "trello-nestjs"
+    depends_on:
+      - db
     build:
       context: ./backend
       dockerfile: Dockerfile

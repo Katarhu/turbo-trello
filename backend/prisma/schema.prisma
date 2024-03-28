@@ -6,7 +6,7 @@
 
 generator client {
   provider      = "prisma-client-js"
-  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+  binaryTargets = ["native", "debian-openssl-1.1.x"]
 }
 
 datasource db {
@@ -24,4 +24,55 @@ model User {
   banStartTime                   DateTime @default("1989-12-31T21:00:00.000Z")
 
   createdAt DateTime @default(now())
+  Board     Board[]
+
+  @@map("users")
+}
+
+model Board {
+  id Int @id @default(autoincrement())
+
+  title String
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  List      List[]
+
+  @@map("boards")
+}
+
+model List {
+  id Int @id @default(autoincrement())
+
+  title String
+
+  userId Int
+
+  boardId Int
+  board   Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Task      Task[]
+
+  @@map("lists")
+}
+
+model Task {
+  id Int @id @default(autoincrement())
+
+  title String
+
+  userId Int
+
+  listId Int
+  list   List @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tasks")
 }

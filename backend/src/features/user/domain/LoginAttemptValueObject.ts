@@ -1,13 +1,10 @@
 import { LoginConfig } from "~config/LoginConfig";
 
 export class LoginAttempt {
-  private _unsuccessfulLoginAttemptsCount: number;
-  private _banStartTime: Date;
-
-  constructor(unsuccessfulLoginAttemptsCount: number = 0, banStartTime: Date = LoginConfig.defaultBanStart) {
-    this._unsuccessfulLoginAttemptsCount = unsuccessfulLoginAttemptsCount;
-    this._banStartTime = banStartTime;
-  }
+  constructor(
+    private _unsuccessfulLoginAttemptsCount: number = 0,
+    private _banStartTime: Date = LoginConfig.defaultBanStart
+  ) {}
 
   get unsuccessfulLoginAttemptsCount(): number {
     return this._unsuccessfulLoginAttemptsCount;

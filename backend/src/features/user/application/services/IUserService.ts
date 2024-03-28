@@ -1,7 +1,7 @@
-import { RegisterUserRequest } from "~features/auth/application/requests/RegisterUserRequest";
+import { CreateUserDto } from "~features/user/application/dto/CreateUserDto";
 
 export interface IUserService {
   validateUserCreation(email: string): Promise<void>;
 
-  createUser(request: RegisterUserRequest): Promise<void>;
+  createUser(request: CreateUserDto): Promise<void>;
 }
