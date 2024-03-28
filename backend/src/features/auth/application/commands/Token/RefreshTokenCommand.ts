@@ -4,7 +4,7 @@ import { ITokenService } from "~common/application/services/TokenService/ITokenS
 import { CommonServiceToken } from "~common/diTokens";
 import { IRefreshTokenCommand } from "~features/auth/application/commands/Token/IRefreshTokenCommand";
 import { RefreshTokenDto } from "~features/auth/application/dto/RefreshTokenDto";
-import { RefreshTokenResponse } from "~features/auth/application/responses/RefreshTokenResponce";
+import { RefreshTokenResponse } from "~features/auth/application/responses/RefreshTokenResponse";
 import { IAuthService } from "~features/auth/application/services/AuthService/IAuthService";
 import { AuthServiceToken } from "~features/auth/diTokens";
 

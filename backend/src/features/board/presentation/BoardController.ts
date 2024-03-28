@@ -46,7 +46,7 @@ export class BoardController {
     @TokenPayload() user: IUserPayload
   ) {
     return await this._updateBoardCommand.execute({
-      id: params.id,
+      id: Number(params.id),
       title: body.title,
       userId: user.id,
     });
@@ -55,7 +55,7 @@ export class BoardController {
   @Delete("/:id")
   async deleteBoard(@Param() params: RequestParams, @TokenPayload() user: IUserPayload) {
     return await this._deleteBoardCommand.execute({
-      id: params.id,
+      id: Number(params.id),
       userId: user.id,
     });
   }
@@ -63,7 +63,7 @@ export class BoardController {
   @Get("/:id")
   async getBoard(@Param() params: RequestParams, @TokenPayload() user: IUserPayload) {
     return await this._getBoardQuery.execute({
-      id: params.id,
+      id: Number(params.id),
       userId: user.id,
     });
   }

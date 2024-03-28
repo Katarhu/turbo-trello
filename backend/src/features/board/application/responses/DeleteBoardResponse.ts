@@ -1,1 +1,3 @@
-export class DeleteBoardResponse {}
+import { BaseResponse } from "~common/application/responses/BaseResponse";
+
+export class DeleteBoardResponse extends BaseResponse {}

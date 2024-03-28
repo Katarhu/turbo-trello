@@ -44,7 +44,7 @@ export class ListController {
   @Delete("/:id")
   async deleteList(@Param() params: RequestParams, @TokenPayload() user: IUserPayload) {
     return await this._deleteListCommand.execute({
-      id: params.id,
+      id: Number(params.id),
       userId: user.id,
     });
   }
@@ -56,7 +56,7 @@ export class ListController {
     @TokenPayload() user: IUserPayload
   ) {
     return await this._updateListCommand.execute({
-      id: params.id,
+      id: Number(params.id),
       title: body.title,
       userId: user.id,
     });
@@ -65,7 +65,7 @@ export class ListController {
   @Get("/:id")
   async getList(@Param() params: RequestParams, @TokenPayload() user: IUserPayload) {
     return await this._getListQuery.execute({
-      id: params.id,
+      id: Number(params.id),
       userId: user.id,
     });
   }

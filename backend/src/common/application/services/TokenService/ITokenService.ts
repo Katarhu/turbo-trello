@@ -1,10 +1,9 @@
 import { IUserPayload } from "~common/application/interfaces/IUserPayload";
-import { LoginAttemptDto } from "~features/auth/application/dto/Login/LoginAttemptDto";
 
 export interface ITokenService {
-  createAccessToken(dto: LoginAttemptDto): string;
+  createAccessToken(dto: IUserPayload): string;
 
-  createRefreshToken(dto: LoginAttemptDto): string;
+  createRefreshToken(dto: IUserPayload): string;
 
   validateSync(token: string): void;
 

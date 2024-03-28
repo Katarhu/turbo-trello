@@ -1,3 +1,5 @@
+import { Injectable } from "@nestjs/common";
+
 import { IBoardRepository } from "~features/board/application/interfaces/IBoardRepository";
 import { ICreateBoard } from "~features/board/application/interfaces/ICreateBoard";
 import { IUpdateBoard } from "~features/board/application/interfaces/IUpdateBoard";
@@ -5,6 +7,7 @@ import { BoardMapper } from "~features/board/application/mappers/BoardMapper";
 import { Board } from "~features/board/domain/BoardEntity";
 import { PrismaService } from "~prisma/PrismaService";
 
+@Injectable()
 export class BoardRepository implements IBoardRepository {
   constructor(private prismaService: PrismaService) {}
 
@@ -41,6 +44,8 @@ export class BoardRepository implements IBoardRepository {
 
   async getById(id: number): Promise<Board> {
     const board = await this.collection.findUnique({ where: { id } });
+
+    if (!board) return null;
 
     return BoardMapper.toEntity(board);
   }

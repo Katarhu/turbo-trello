@@ -9,6 +9,6 @@ export const enum BoardCommandToken {
 }
 
 export const enum BoardQueryToken {
-  GET_BOARD_QUERY = "CREATE_BOARD_COMMAND",
-  GET_BOARDS_QUERY = "CREATE_BOARDS_COMMAND",
+  GET_BOARD_QUERY = "GET_BOARD_QUERY",
+  GET_BOARDS_QUERY = "GET_BOARDS_QUERY",
 }

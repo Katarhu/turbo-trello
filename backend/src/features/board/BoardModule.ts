@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 
+import { CommonModule } from "~common/CommonModule";
 import { CreateBoardCommand } from "~features/board/application/commands/CreateBoard/CreateBoardCommand";
 import { DeleteBoardCommand } from "~features/board/application/commands/DeleteBoard/DeleteBoardCommand";
 import { UpdateBoardCommand } from "~features/board/application/commands/UpdateBoard/UpdateBoardCommand";
@@ -12,7 +13,7 @@ import { PrismaModule } from "~prisma/PrismaModule";
 import { createProvider } from "~utils/functions/createProvider";
 
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule, CommonModule],
   controllers: [BoardController],
   providers: [
     createProvider(BoardRepositoryToken.BOARD_REPOSITORY, BoardRepository),

@@ -1,9 +1,9 @@
 import { Inject } from "@nestjs/common";
 
+import { ListNotFoundError } from "../../errors/ListNotFoundError";
 import { ForbiddenError } from "~common/application/errors/ForbiddenError";
 import { IUpdateListCommand } from "~features/list/application/commands/UpdateListCommand/IUpdateListCommand";
 import { UpdateListDto } from "~features/list/application/dto/UpdateListDto";
-import { ListNotFoundError } from "~features/list/application/error/ListNotFoundError";
 import { IListRepository } from "~features/list/application/interfaces/IListRepository";
 import { ListMapper } from "~features/list/application/mappers/ListMapper";
 import { UpdateListResponse } from "~features/list/application/responses/UpdateListResponse";

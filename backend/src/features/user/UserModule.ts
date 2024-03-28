@@ -13,6 +13,6 @@ import { createProvider } from "~utils/functions/createProvider";
     createProvider(UserRepositoryToken.USER_REPOSITORY, UserRepository),
     createProvider(UserCommandToken.CREATE_USER_COMMAND, CreateUserCommand),
   ],
-  exports: [UserCommandToken.CREATE_USER_COMMAND],
+  exports: [UserCommandToken.CREATE_USER_COMMAND, UserRepositoryToken.USER_REPOSITORY],
 })
 export class UserModule {}

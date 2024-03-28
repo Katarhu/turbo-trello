@@ -11,5 +11,5 @@ export interface IBoardRepository {
 
   delete(id: number): Promise<void>;
 
-  getById(id: number): Promise<Board>;
+  getById(id: number): Promise<Board | null>;
 }

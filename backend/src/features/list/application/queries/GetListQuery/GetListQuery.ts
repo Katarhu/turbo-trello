@@ -1,8 +1,8 @@
 import { Inject, Injectable, Scope } from "@nestjs/common";
 
+import { ListNotFoundError } from "../../errors/ListNotFoundError";
 import { ForbiddenError } from "~common/application/errors/ForbiddenError";
 import { GetListDto } from "~features/list/application/dto/GetListDto";
-import { ListNotFoundError } from "~features/list/application/error/ListNotFoundError";
 import { IListRepository } from "~features/list/application/interfaces/IListRepository";
 import { ListMapper } from "~features/list/application/mappers/ListMapper";
 import { IGetListQuery } from "~features/list/application/queries/GetListQuery/IGetListQuery";

@@ -22,6 +22,6 @@ export class DeleteBoardCommand implements IDeleteBoardCommand {
 
     await this._boardRepository.delete(board.id);
 
-    return new DeleteBoardResponse();
+    return new DeleteBoardResponse().withMessage("Board was deleted successfully");
   }
 }

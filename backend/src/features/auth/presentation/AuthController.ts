@@ -6,7 +6,8 @@ import { IRefreshTokenCommand } from "~features/auth/application/commands/Token/
 import { LoginUserRequest } from "~features/auth/application/requests/LoginUserRequest";
 import { RegisterUserRequest } from "~features/auth/application/requests/RegisterUserRequest";
 import { LoginUserResponse } from "~features/auth/application/responses/LoginUserResponse";
-import { RefreshTokenResponse } from "~features/auth/application/responses/RefreshTokenResponce";
+import { RefreshTokenResponse } from "~features/auth/application/responses/RefreshTokenResponse";
+import { RegisterUserResponse } from "~features/auth/application/responses/RegisterUserResponse";
 import { AuthCommandToken } from "~features/auth/diTokens";
 import { ICreateUserCommand } from "~features/user/application/commands/ICreateUserCommand";
 import { UserCommandToken } from "~features/user/diTokens";
@@ -24,8 +25,8 @@ export class AuthController {
   private _refreshTokenCommand: IRefreshTokenCommand;
 
   @Post("/register")
-  async register(@Body() body: RegisterUserRequest): Promise<void> {
-    await this._createUserCommand.execute(body);
+  async register(@Body() body: RegisterUserRequest): Promise<RegisterUserResponse> {
+    return await this._createUserCommand.execute(body);
   }
 
   @Post("/login")

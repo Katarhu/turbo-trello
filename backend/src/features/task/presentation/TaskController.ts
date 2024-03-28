@@ -53,7 +53,7 @@ export class TaskController {
     @TokenPayload() user: IUserPayload
   ) {
     return await this._updateTaskCommand.execute({
-      id: params.id,
+      id: Number(params.id),
       title: body.title,
       userId: user.id,
     });
@@ -66,7 +66,7 @@ export class TaskController {
     @TokenPayload() user: IUserPayload
   ) {
     return await this._changeTaskListCommand.execute({
-      id: params.id,
+      id: Number(params.id),
       listId: body.listId,
       userId: user.id,
     });
@@ -75,7 +75,7 @@ export class TaskController {
   @Delete("/:id")
   async deleteTask(@Param() params: RequestParams, @TokenPayload() user: IUserPayload) {
     return await this._deleteTaskCommand.execute({
-      id: params.id,
+      id: Number(params.id),
       userId: user.id,
     });
   }
@@ -83,7 +83,7 @@ export class TaskController {
   @Get("/:id")
   async getTask(@Param() params: RequestParams, @TokenPayload() user: IUserPayload) {
     return await this._getTaskQuery.execute({
-      id: params.id,
+      id: Number(params.id),
       userId: user.id,
     });
   }

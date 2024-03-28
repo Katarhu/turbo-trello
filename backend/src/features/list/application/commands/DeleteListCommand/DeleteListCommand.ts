@@ -3,7 +3,7 @@ import { Inject, Injectable, Scope } from "@nestjs/common";
 import { ForbiddenError } from "~common/application/errors/ForbiddenError";
 import { IDeleteListCommand } from "~features/list/application/commands/DeleteListCommand/IDeleteListCommand";
 import { DeleteListDto } from "~features/list/application/dto/DeleteListDto";
-import { ListNotFoundError } from "~features/list/application/error/ListNotFoundError";
+import { ListNotFoundError } from "~features/list/application/errors/ListNotFoundError";
 import { IListRepository } from "~features/list/application/interfaces/IListRepository";
 import { DeleteListResponse } from "~features/list/application/responses/DeleteListResponse";
 import { ListRepositoryToken } from "~features/list/diTokens";
@@ -22,6 +22,6 @@ export class DeleteListCommand implements IDeleteListCommand {
 
     await this._listRepository.delete(dto.id);
 
-    return new DeleteListResponse();
+    return new DeleteListResponse().withMessage("List was deleted successfully");
   }
 }

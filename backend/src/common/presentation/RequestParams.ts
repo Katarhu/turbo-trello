@@ -1,6 +1,6 @@
-import { IsInt } from "class-validator";
+import { IsNumberString } from "class-validator";
 
 export class RequestParams {
-  @IsInt()
-  readonly id: number;
+  @IsNumberString()
+  readonly id: string;
 }

@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { JwtModule } from "@nestjs/jwt";
 
 import { CryptoService } from "~common/application/services/CryptoService/CryptoService";
@@ -9,8 +10,11 @@ import { createProvider } from "~utils/functions/createProvider";
 
 @Module({
   imports: [
-    JwtModule.register({
-      secret: process.env[TokenConfig.secretTokenEnvKey],
+    JwtModule.registerAsync({
+      inject: [ConfigService],
+      useFactory: () => ({
+        secret: process.env[TokenConfig.secretTokenEnvKey],
+      }),
     }),
   ],
   providers: [

@@ -22,6 +22,6 @@ export class DeleteTaskCommand implements IDeleteTaskCommand {
 
     await this._taskRepository.delete(task.id);
 
-    return new DeleteTaskResponse();
+    return new DeleteTaskResponse().withMessage("List was deleted successfully");
   }
 }

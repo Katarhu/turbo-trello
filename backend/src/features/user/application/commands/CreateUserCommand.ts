@@ -20,7 +20,7 @@ export class CreateUserCommand implements ICreateUserCommand {
   async execute(dto: CreateUserDto): Promise<RegisterUserResponse> {
     const user = await this._userRepository.getByEmail(dto.email);
 
-    if (!user) throw new EmailInUseError();
+    if (user) throw new EmailInUseError();
 
     const hashedPassword = await this._cryptoService.hash(dto.password);
 
@@ -29,6 +29,6 @@ export class CreateUserCommand implements ICreateUserCommand {
       password: hashedPassword,
     });
 
-    return new RegisterUserResponse();
+    return new RegisterUserResponse().withMessage("User was created successfully");
   }
 }
