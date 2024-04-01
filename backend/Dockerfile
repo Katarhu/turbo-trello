@@ -1,4 +1,10 @@
-FROM node:18-slim AS builder
+FROM node:20.1-alpine AS builder
+
+RUN apk add --update --no-cache openssl1.1-compat
+
+#
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
 
 # Create app directory
 WORKDIR /app
@@ -7,20 +13,19 @@ WORKDIR /app
 COPY package*.json ./
 COPY prisma ./prisma/
 
-RUN apt-get update && apt-get upgrade -y \
-    && apt-get install -y \
-    openssl \
-    procps
-
-RUN npm i -g pnpm
 # Install app dependencies
-RUN pnpm install
+RUN npm install
+
 
 COPY . .
 
-RUN pnpm run build
+RUN npx prisma generate --schema=/app/prisma/schema.prisma
 
-FROM node:18-slim
+RUN npx prisma migrate deploy
+
+RUN npm run build
+
+FROM node:20.1-alpine
 
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package*.json ./
