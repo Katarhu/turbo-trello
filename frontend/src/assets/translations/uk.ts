@@ -1,5 +1,22 @@
 export const ukTranslations = {
   translation: {
-    test: "Тест переклад",
+    "PUBLIC_HEADER.GET_STARTED": "Почати роботу",
+
+    "LOGIN.DONT_HAVE_ACCOUNT": " Ще не зареєстровані?",
+    "LOGIN.REGISTER_LINK": "Створіть обліковий запис",
+    "LOGIN.SIGN_IN_TO": "Увійдіть до",
+    "LOGIN.CONFIRM_BUTTON": "Увійти",
+
+    "REGISTER.SIGN_UP_TO": "Вітаємо в",
+    "REGISTER.ALREADY_HAVE_ACCOUNT": "Вже маєте обліковий запис?",
+    "REGISTER.LOGIN_LINK": "Увійти",
+    "REGISTER.CHECKBOX_TEXT_START": "Я згоден з",
+    "REGISTER.TERMS_OF_SERVICE": "Умовами використання",
+    "REGISTER.CHECKBOX_TEXT_CONCATENATION": "та",
+    "REGISTER.PRIVACY_POLICY": "Політикою конфіденційності",
+    "REGISTER.CONFIRM_BUTTON": "Створити обліковий запис",
+
+    "INPUT.EMAIL_ADDRESS_LABEL": "Пошта",
+    "INPUT.PASSWORD_LABEL": "Пароль",
   },
 };
