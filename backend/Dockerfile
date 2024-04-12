@@ -1,22 +1,35 @@
-FROM node:18-slim AS base
+FROM node:20.1-alpine AS builder
 
-RUN apt-get update && apt-get upgrade -y \
-    && apt-get install -y \
-    openssl \
-    procps
+RUN apk add --update --no-cache openssl1.1-compat
 
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
+#
+ARG DATABASE_URL
+ENV DATABASE_URL=${DATABASE_URL}
 
-COPY . /app
+# Create app directory
 WORKDIR /app
 
-FROM base AS deps
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json ./
+COPY prisma ./prisma/
 
-RUN pnpm run db:generate
+# Install app dependencies
+RUN npm install
+
+
+COPY . .
+
+RUN npx prisma generate --schema=/app/prisma/schema.prisma
+
+RUN npx prisma migrate deploy
+
+RUN npm run build
+
+FROM node:20.1-alpine
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/dist ./dist
 
 EXPOSE 8080
-
-CMD ["pnpm", "run", "start:dev"]
+CMD [ "npm", "run", "start:prod" ]
