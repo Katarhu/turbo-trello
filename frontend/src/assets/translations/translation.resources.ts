@@ -1,4 +1,4 @@
-import { AppLanguage } from "~constants/language.constants.ts";
+import { AppLanguage } from "~constants/LanguageConstants.ts";
 
 import { enTranslations } from "./en.ts";
 import { ukTranslations } from "./uk.ts";

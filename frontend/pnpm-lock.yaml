@@ -26,6 +26,9 @@ dependencies:
   mobx:
     specifier: ^6.12.0
     version: 6.12.0
+  mobx-react:
+    specifier: ^9.1.1
+    version: 9.1.1(mobx@6.12.0)(react-dom@18.2.0)(react@18.2.0)
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -2679,6 +2682,44 @@ packages:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
     dev: true
 
+  /mobx-react-lite@4.0.7(mobx@6.12.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-RjwdseshK9Mg8On5tyJZHtGD+J78ZnCnRaxeQDSiciKVQDUbfZcXhmld0VMxAwvcTnPEHZySGGewm467Fcpreg==}
+    peerDependencies:
+      mobx: ^6.9.0
+      react: ^16.8.0 || ^17 || ^18
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      mobx: 6.12.0
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
+
+  /mobx-react@9.1.1(mobx@6.12.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-gVV7AdSrAAxqXOJ2bAbGa5TkPqvITSzaPiiEkzpW4rRsMhSec7C2NBCJYILADHKp2tzOAIETGRsIY0UaCV5aEw==}
+    peerDependencies:
+      mobx: ^6.9.0
+      react: ^16.8.0 || ^17 || ^18
+      react-dom: '*'
+      react-native: '*'
+    peerDependenciesMeta:
+      react-dom:
+        optional: true
+      react-native:
+        optional: true
+    dependencies:
+      mobx: 6.12.0
+      mobx-react-lite: 4.0.7(mobx@6.12.0)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /mobx@6.12.0:
     resolution: {integrity: sha512-Mn6CN6meXEnMa0a5u6a5+RKrqRedHBhZGd15AWLk9O6uFY4KYHzImdt8JI8WODo1bjTSRnwXhJox+FCUZhCKCQ==}
     dev: false
@@ -3373,6 +3414,14 @@ packages:
     dependencies:
       punycode: 2.3.1
     dev: true
+
+  /use-sync-external-store@1.2.0(react@18.2.0):
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
 
   /util@0.10.4:
     resolution: {integrity: sha512-0Pm9hTQ3se5ll1XihRic3FDIku70C+iHUdT/W926rSgHV5QgXsYbKZN8MSC3tJtSkhuROzvsQjAaFENRXr+19A==}
