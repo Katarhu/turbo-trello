@@ -18,5 +18,11 @@ export const ukTranslations = {
 
     "INPUT.EMAIL_ADDRESS_LABEL": "Пошта",
     "INPUT.PASSWORD_LABEL": "Пароль",
+
+    "VALIDATION_MESSAGE.REQUIRED": "Це поле є обов'язковим",
+    "VALIDATION_MESSAGE.EMAIL": "Пошта повинна бути коректною",
+    "VALIDATION_MESSAGE.MIN_LENGTH": "Мінімальна довжина поля {{value}} символів",
+    "VALIDATION_MESSAGE.MAX_LENGTH": "Максимальна довжина поля {{value}} символів",
+    "VALIDATION.NOT_CHECKED": "Для того щоб продовжити, потрібно погодитись з угодами користування",
   },
 };
