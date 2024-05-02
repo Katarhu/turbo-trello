@@ -25,11 +25,14 @@
     "paths": {
       "~components/*": ["components/*"],
       "~constants/*": ["constants/*"],
+      "~features/*": ["features/*"],
+      "~router/*": ["router/*"],
       "~assets/*": ["assets/*"],
       "~pages/*": ["pages/*"],
       "~types/*": ["types/*"],
       "~core/*": ["core/*"],
-      "~utils/*": ["utils/*"]
+      "~utils/*": ["utils/*"],
+
     }
   },
   "include": [

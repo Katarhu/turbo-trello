@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 
-import { PublicHeader } from "~components/PublicHeader.tsx";
+import { PublicHeader } from "~features/PublicHeader";
 
 export const PublicPage = () => {
   return (
