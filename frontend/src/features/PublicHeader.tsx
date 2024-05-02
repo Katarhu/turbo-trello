@@ -1,9 +1,12 @@
 import { Box, Stack, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { NavLink } from "react-router-dom";
 
-import { LanguageSwitcher } from "../features/LanguageSwitcher.tsx";
 import { AppPrimaryButton } from "~components/AppPrimaryButton.tsx";
+import { Routes } from "~router/constants.ts";
 import { createSxStyles } from "~utils/createSxStyles.ts";
+
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 export const PublicHeader = () => {
   const { t } = useTranslation();
@@ -15,7 +18,9 @@ export const PublicHeader = () => {
       </Typography>
       <Stack direction="row" gap="1rem">
         <LanguageSwitcher />
-        <AppPrimaryButton text={t("PUBLIC_HEADER.GET_STARTED")} />
+        <NavLink to={Routes.LOGIN}>
+          <AppPrimaryButton text={t("PUBLIC_HEADER.GET_STARTED")} />
+        </NavLink>
       </Stack>
     </Box>
   );
