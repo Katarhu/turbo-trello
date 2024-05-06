@@ -6,6 +6,8 @@ export const ukTranslations = {
     "LOGIN.REGISTER_LINK": "Створіть обліковий запис",
     "LOGIN.SIGN_IN_TO": "Увійдіть до",
     "LOGIN.CONFIRM_BUTTON": "Увійти",
+    "LOGIN.RESTRICTED_MESSAGE": "Надто багато спроб, спробуйте знову через {{value}} хвилин",
+    "LOGIN.INVALID_CREDENTIALS": "Неправильна пошта чи пароль",
 
     "REGISTER.SIGN_UP_TO": "Вітаємо в",
     "REGISTER.ALREADY_HAVE_ACCOUNT": "Вже маєте обліковий запис?",

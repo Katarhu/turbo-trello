@@ -1,5 +1,7 @@
 import { IUser } from "~types/User.ts";
 
+// Requests
+
 export interface ICreateUser {
   email: string;
   password: string;
@@ -9,6 +11,8 @@ export interface ILoginUser {
   email: string;
   password: string;
 }
+
+// Responses
 
 export interface ILoginResponse {
   user: IUser;
@@ -20,6 +24,17 @@ export interface IRefreshTokenResponse {
   accessToken: string;
 }
 
-export interface AuthError {
+// Errors
+
+export interface RegisterError {
   message: string;
+}
+
+export interface InvalidCredentialsError {
+  message: string;
+}
+
+export interface LoginRestrictedError {
+  message: string;
+  banTimeRemaining: number;
 }

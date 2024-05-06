@@ -1,10 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
 
 import { App } from "../App.tsx";
+import { LoginPage } from "~pages/Auth/LoginPage.tsx";
+import { RegisterPage } from "~pages/Auth/RegisterPage.tsx";
 import { ErrorPage } from "~pages/ErrorPage.tsx";
-import { LoginPage } from "~pages/LoginPage.tsx";
 import { PublicPage } from "~pages/PublicPage.tsx";
-import { RegisterPage } from "~pages/RegisterPage.tsx";
 
 import { Routes } from "./constants.ts";
 

@@ -1,8 +1,17 @@
 import { AxiosError } from "axios";
 import { flow, observable } from "mobx";
 
+import { AccessTokenApi } from "../api/AccessTokenApi.ts";
 import { AuthApi } from "../api/AuthApi.ts";
-import { AuthError, ICreateUser, ILoginResponse, ILoginUser } from "../api/AuthApiTypes.ts";
+import {
+  RegisterError,
+  ICreateUser,
+  ILoginResponse,
+  ILoginUser,
+  LoginRestrictedError,
+  InvalidCredentialsError,
+} from "../api/AuthApiTypes.ts";
+import { RefreshTokenApi } from "../api/RefreshTokenApi.ts";
 import { OnErrorCallback, OnSuccessCallback } from "~types/StoreTypes.ts";
 import { IUser } from "~types/User.ts";
 
@@ -18,10 +27,10 @@ export class UserStore {
   constructor(private readonly rootStore: RootStore) {}
 
   @flow
-  async loginUser(
+  async loginUser<TError = LoginRestrictedError | InvalidCredentialsError>(
     body: ILoginUser,
     onSuccess?: OnSuccessCallback<ILoginResponse>,
-    onError?: OnErrorCallback<AuthError>
+    onError?: OnErrorCallback<TError>
   ) {
     try {
       const { data } = await AuthApi.loginUser(body);
@@ -29,22 +38,29 @@ export class UserStore {
       this.user = data.user;
       this.accessToken = data.accessToken;
 
+      RefreshTokenApi.setToken(data.refreshToken);
+      AccessTokenApi.setToken(data.accessToken);
+
       if (onSuccess) onSuccess(data);
     } catch (error) {
-      const errorResponse = (error as AxiosError<AuthError>).response!.data;
+      const errorResponse = (error as AxiosError<TError>).response!.data;
 
       if (onError) onError(errorResponse);
     }
   }
 
   @flow
-  async registerUser(body: ICreateUser, onSuccess?: OnSuccessCallback<void>, onError?: OnErrorCallback<AuthError>) {
+  async registerUser<TError = RegisterError>(
+    body: ICreateUser,
+    onSuccess?: OnSuccessCallback<void>,
+    onError?: OnErrorCallback<TError>
+  ) {
     try {
       const { data } = await AuthApi.createUser(body);
 
       if (onSuccess) onSuccess(data);
     } catch (error) {
-      const errorResponse = (error as AxiosError<AuthError>).response!.data;
+      const errorResponse = (error as AxiosError<TError>).response!.data;
 
       if (onError) onError(errorResponse);
     }

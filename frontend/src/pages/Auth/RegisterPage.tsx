@@ -17,16 +17,16 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import { AuthError } from "../api/AuthApiTypes.ts";
-import { useNotification } from "../context/NotificationContext.tsx";
-import { useStore } from "../context/StoreContext.tsx";
-import { Routes } from "../router/constants.ts";
+import { RegisterError } from "../../api/AuthApiTypes.ts";
+import { useNotification } from "../../context/NotificationContext.tsx";
+import { useStore } from "../../context/StoreContext.tsx";
 import smileyFaceImage from "~assets/images/auth_smiley.png";
 import { AppPasswordTextField } from "~components/AppPasswordTextField.tsx";
 import { AppPrimaryButton } from "~components/AppPrimaryButton.tsx";
 import { ErrorMessage } from "~components/ErrorMessage.tsx";
 import { ValidationConstants, validationKeys } from "~constants/ValidationConstants.ts";
-import { LoginPageFunctions } from "~pages/AuthFunctions.ts";
+import { AuthFunctions } from "~pages/Auth/AuthFunctions.ts";
+import { Routes } from "~router/constants.ts";
 import { createSxStyles } from "~utils/createSxStyles.ts";
 
 import { RegisterForm } from "./RegisterPageTypes.ts";
@@ -76,7 +76,7 @@ export const RegisterPage = () => {
 
     if (error.message === undefined) return;
 
-    const translationParams = LoginPageFunctions.getTranslationParams(error.message);
+    const translationParams = AuthFunctions.getTranslationParams(error.message);
 
     if (!translationParams) return;
 
@@ -89,19 +89,12 @@ export const RegisterPage = () => {
     navigate(Routes.LOGIN);
   };
 
-  const onRegisterError = (error: AuthError) => {
+  const onRegisterError = (error: RegisterError) => {
     setHttpErrorMessage(error.message);
   };
 
   const onSubmit = (formData: RegisterForm) => {
-    userStore.registerUser(
-      {
-        email: formData.email,
-        password: formData.password,
-      },
-      onRegisterSuccess,
-      onRegisterError
-    );
+    userStore.registerUser(formData, onRegisterSuccess, onRegisterError);
   };
 
   const formCheckboxLabel = (

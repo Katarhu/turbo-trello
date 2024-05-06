@@ -1,7 +1,7 @@
 import { ValidationConstants, validationKeys, validationTranslationKeys } from "~constants/ValidationConstants.ts";
-import { ValidationKey } from "~pages/AuthTypes.ts";
+import { ValidationKey } from "~pages/Auth/AuthTypes.ts";
 
-export namespace LoginPageFunctions {
+export namespace AuthFunctions {
   export const getTranslationParams = (
     potentialValidationKey: string
   ): [string] | [string, Record<string, unknown>] | null => {
