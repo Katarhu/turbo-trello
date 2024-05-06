@@ -3,6 +3,7 @@ import { BadRequestException, ForbiddenException, Inject } from "@nestjs/common"
 import { ICryptoService } from "~common/application/services/CryptoService/ICryptoService";
 import { CommonServiceToken } from "~common/diTokens";
 import { LoginConfig } from "~config/LoginConfig";
+import { IncorrectCredentialsError } from "~features/auth/application/errors/IncorrectCredentialsError";
 import { calculateRemainingBanTime } from "~features/auth/application/helpers/calculateRemainingBanTime";
 import { checkIsBanned } from "~features/auth/application/helpers/checkIsBanned";
 import { createBanTime } from "~features/auth/application/helpers/createBanTime";
@@ -25,7 +26,7 @@ export class AuthService implements IAuthService {
   async getUserByEmail(email: string) {
     const user = await this._userRepository.getByEmail(email);
 
-    if (!user) throw new BadRequestException({ message: "Email or password is incorrect" });
+    if (!user) throw new IncorrectCredentialsError();
 
     return user;
   }
@@ -41,7 +42,7 @@ export class AuthService implements IAuthService {
 
     await this.saveNewLoginAttempt(user, newLoginAttempt);
 
-    throw new BadRequestException({ message: "Email or password is incorrect" });
+    throw new IncorrectCredentialsError();
   }
 
   private validateCurrentAttemptState(user: User): LoginAttempt {
@@ -52,7 +53,7 @@ export class AuthService implements IAuthService {
 
       throw new ForbiddenException({
         message: `Too many attempts, try again in ${formatTime(banTimeRemaining, TimeFormat.MIN)} minutes`,
-        banTimeRemaining,
+        banTimeRemaining
       });
     }
 
