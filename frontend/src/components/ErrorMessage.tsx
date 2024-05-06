@@ -5,5 +5,9 @@ interface ErrorMessageProps {
 }
 
 export const ErrorMessage = ({ message }: ErrorMessageProps) => {
-  return <Alert severity="error">{message}</Alert>;
+  return (
+    <Alert sx={{ width: "100%" }} severity="error">
+      {message}
+    </Alert>
+  );
 };

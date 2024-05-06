@@ -19,6 +19,8 @@ export const ukTranslations = {
     "INPUT.EMAIL_ADDRESS_LABEL": "Пошта",
     "INPUT.PASSWORD_LABEL": "Пароль",
 
+    "NOTIFICATION.REGISTER_SUCCESS": "Реєстрація пройшла успішно.",
+
     "VALIDATION_MESSAGE.REQUIRED": "Це поле є обов'язковим",
     "VALIDATION_MESSAGE.EMAIL": "Пошта повинна бути коректною",
     "VALIDATION_MESSAGE.MIN_LENGTH": "Мінімальна довжина поля {{value}} символів",

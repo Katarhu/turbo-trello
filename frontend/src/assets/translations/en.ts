@@ -19,6 +19,8 @@ export const enTranslations = {
     "INPUT.EMAIL_ADDRESS_LABEL": "Email Address",
     "INPUT.PASSWORD_LABEL": "Password",
 
+    "NOTIFICATION.REGISTER_SUCCESS": "Registration is complete.",
+
     "VALIDATION_MESSAGE.REQUIRED": "This field is required",
     "VALIDATION_MESSAGE.EMAIL": "Input should be valid email",
     "VALIDATION_MESSAGE.MIN_LENGTH": "Minimal length of this field is {{value}}",

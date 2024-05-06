@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 import { AuthError } from "../api/AuthApiTypes.ts";
+import { useNotification } from "../context/NotificationContext.tsx";
 import { useStore } from "../context/StoreContext.tsx";
 import { Routes } from "../router/constants.ts";
 import smileyFaceImage from "~assets/images/auth_smiley.png";
@@ -34,6 +35,7 @@ export const RegisterPage = () => {
   const { t } = useTranslation();
   const { userStore } = useStore();
   const navigate = useNavigate();
+  const { createNotification } = useNotification();
   const [httpErrorMessage, setHttpErrorMessage] = useState<string | null>(null);
   const {
     register,
@@ -82,6 +84,8 @@ export const RegisterPage = () => {
   };
 
   const onRegisterSuccess = () => {
+    createNotification(t("NOTIFICATION.REGISTER_SUCCESS"));
+
     navigate(Routes.LOGIN);
   };
 

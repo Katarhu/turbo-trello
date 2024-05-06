@@ -1,4 +1,5 @@
-import { action, flow, observable } from "mobx";
+import { AxiosError } from "axios";
+import { flow, observable } from "mobx";
 
 import { AuthApi } from "../api/AuthApi.ts";
 import { AuthError, ICreateUser, ILoginResponse, ILoginUser } from "../api/AuthApiTypes.ts";
@@ -30,7 +31,9 @@ export class UserStore {
 
       if (onSuccess) onSuccess(data);
     } catch (error) {
-      if (onError) onError(error as AuthError);
+      const errorResponse = (error as AxiosError<AuthError>).response!.data;
+
+      if (onError) onError(errorResponse);
     }
   }
 
@@ -41,7 +44,9 @@ export class UserStore {
 
       if (onSuccess) onSuccess(data);
     } catch (error) {
-      if (onError) onError(error as AuthError);
+      const errorResponse = (error as AxiosError<AuthError>).response!.data;
+
+      if (onError) onError(errorResponse);
     }
   }
 }
