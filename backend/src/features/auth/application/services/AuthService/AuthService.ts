@@ -4,6 +4,7 @@ import { ICryptoService } from "~common/application/services/CryptoService/ICryp
 import { CommonServiceToken } from "~common/diTokens";
 import { LoginConfig } from "~config/LoginConfig";
 import { IncorrectCredentialsError } from "~features/auth/application/errors/IncorrectCredentialsError";
+import { LoginRestrictedError } from "~features/auth/application/errors/LoginRestrictedError";
 import { calculateRemainingBanTime } from "~features/auth/application/helpers/calculateRemainingBanTime";
 import { checkIsBanned } from "~features/auth/application/helpers/checkIsBanned";
 import { createBanTime } from "~features/auth/application/helpers/createBanTime";
@@ -51,10 +52,10 @@ export class AuthService implements IAuthService {
     if (isLoginRestricted) {
       const banTimeRemaining = calculateRemainingBanTime(user.banStartTime, LoginConfig.loginRestrictionTimeMs);
 
-      throw new ForbiddenException({
-        message: `Too many attempts, try again in ${formatTime(banTimeRemaining, TimeFormat.MIN)} minutes`,
+      throw new LoginRestrictedError(
+        `Too many attempts, try again in ${formatTime(banTimeRemaining, TimeFormat.MIN)} minutes`,
         banTimeRemaining
-      });
+      );
     }
 
     return new LoginAttempt(user.unsuccessfulLoginAttemptsCount, user.banStartTime);
