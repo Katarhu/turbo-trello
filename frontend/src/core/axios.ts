@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const URL = "http://127.0.0.1:8000/";
+import { ApiConstants } from "~constants/ApiConstants.ts";
 
 export const appAxios = axios.create({
-  baseURL: URL,
+  baseURL: ApiConstants.API_URL,
 });

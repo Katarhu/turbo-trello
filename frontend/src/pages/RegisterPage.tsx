@@ -11,14 +11,19 @@ import {
   OutlinedInput,
   InputLabel,
 } from "@mui/material";
+import { useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
+import { AuthError } from "../api/AuthApiTypes.ts";
+import { useStore } from "../context/StoreContext.tsx";
 import { Routes } from "../router/constants.ts";
 import smileyFaceImage from "~assets/images/auth_smiley.png";
 import { AppPasswordTextField } from "~components/AppPasswordTextField.tsx";
 import { AppPrimaryButton } from "~components/AppPrimaryButton.tsx";
+import { ErrorMessage } from "~components/ErrorMessage.tsx";
 import { ValidationConstants, validationKeys } from "~constants/ValidationConstants.ts";
 import { LoginPageFunctions } from "~pages/AuthFunctions.ts";
 import { createSxStyles } from "~utils/createSxStyles.ts";
@@ -27,6 +32,9 @@ import { RegisterForm } from "./RegisterPageTypes.ts";
 
 export const RegisterPage = () => {
   const { t } = useTranslation();
+  const { userStore } = useStore();
+  const navigate = useNavigate();
+  const [httpErrorMessage, setHttpErrorMessage] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -73,8 +81,23 @@ export const RegisterPage = () => {
     return t(...translationParams);
   };
 
+  const onRegisterSuccess = () => {
+    navigate(Routes.LOGIN);
+  };
+
+  const onRegisterError = (error: AuthError) => {
+    setHttpErrorMessage(error.message);
+  };
+
   const onSubmit = (formData: RegisterForm) => {
-    console.log(formData);
+    userStore.registerUser(
+      {
+        email: formData.email,
+        password: formData.password,
+      },
+      onRegisterSuccess,
+      onRegisterError
+    );
   };
 
   const formCheckboxLabel = (
@@ -112,6 +135,8 @@ export const RegisterPage = () => {
               </Typography>
             </Typography>
           </Stack>
+
+          {httpErrorMessage && <ErrorMessage message={httpErrorMessage} />}
 
           <Stack gap="2rem" width="100%">
             <FormControl fullWidth error={!!errors.email}>
