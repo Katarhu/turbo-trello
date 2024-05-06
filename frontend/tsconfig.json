@@ -35,9 +35,6 @@
 
     }
   },
-  "include": [
-    "src",
-    "src/types/i18n.d.ts"
-  ],
+  "include": ["src", "src/types/i18n.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
