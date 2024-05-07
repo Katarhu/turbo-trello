@@ -72,9 +72,7 @@ export const RegisterPage = () => {
   });
 
   const translateValidationError = (error: FieldError | undefined) => {
-    if (error === undefined) return;
-
-    if (error.message === undefined) return;
+    if (error === undefined || error.message === undefined) return;
 
     const translationParams = AuthFunctions.getTranslationParams(error.message);
 

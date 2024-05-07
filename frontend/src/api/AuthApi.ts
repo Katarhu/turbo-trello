@@ -14,6 +14,6 @@ export class AuthApi {
   }
 
   static refreshToken(): Promise<AxiosResponse<IRefreshTokenResponse>> {
-    return appAxios.post("auth/refresh");
+    return appAxios.post("auth/refresh", undefined, { withCredentials: true });
   }
 }

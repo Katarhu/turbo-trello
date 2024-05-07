@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { flow, observable } from "mobx";
+import { action, flow, observable } from "mobx";
 
 import { AccessTokenApi } from "../api/AccessTokenApi.ts";
 import { AuthApi } from "../api/AuthApi.ts";
@@ -11,7 +11,6 @@ import {
   LoginRestrictedError,
   InvalidCredentialsError,
 } from "../api/AuthApiTypes.ts";
-import { RefreshTokenApi } from "../api/RefreshTokenApi.ts";
 import { OnErrorCallback, OnSuccessCallback } from "~types/StoreTypes.ts";
 import { IUser } from "~types/User.ts";
 
@@ -26,6 +25,17 @@ export class UserStore {
 
   constructor(private readonly rootStore: RootStore) {}
 
+  @action
+  logOut() {
+    this.user = null;
+    this.accessToken = null;
+  }
+
+  @action
+  setAccessToken(token: string) {
+    this.accessToken = token;
+  }
+
   @flow
   async loginUser<TError = LoginRestrictedError | InvalidCredentialsError>(
     body: ILoginUser,
@@ -38,7 +48,6 @@ export class UserStore {
       this.user = data.user;
       this.accessToken = data.accessToken;
 
-      RefreshTokenApi.setToken(data.refreshToken);
       AccessTokenApi.setToken(data.accessToken);
 
       if (onSuccess) onSuccess(data);

@@ -5,5 +5,5 @@ export namespace TokenConfig {
 
   export const secretTokenEnvKey = "JWT_SECRET";
 
-  export const cookieTokenKey = "refreshToken";
+  export const cookieTokenKey = "refresh_token";
 }
