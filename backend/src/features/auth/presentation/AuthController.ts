@@ -1,4 +1,5 @@
-import { Body, Controller, Inject, Post } from "@nestjs/common";
+import { Body, Controller, Inject, Post, Res } from "@nestjs/common";
+import { Response } from "express";
 
 import { TokenConfig } from "~config/TokenConfig";
 import { ILoginUserCommand } from "~features/auth/application/commands/Login/ILoginUserCommand";
@@ -30,14 +31,21 @@ export class AuthController {
   }
 
   @Post("/login")
-  async login(@Body() body: LoginUserRequest): Promise<LoginUserResponse> {
-    return await this._loginUserCommand.execute(body);
+  async login(@Body() body: LoginUserRequest, @Res({ passthrough: true }) response: Response): Promise<Omit<LoginUserResponse, "refreshToken">> {
+    const { refreshToken, accessToken, user } = await this._loginUserCommand.execute(body);
+
+    response.cookie(TokenConfig.cookieTokenKey, refreshToken);
+
+    return {
+      user,
+      accessToken,
+    };
   }
 
   @Post("/refresh")
   async refreshAccessToken(@Cookies(TokenConfig.cookieTokenKey) refreshToken: string): Promise<RefreshTokenResponse> {
     return await this._refreshTokenCommand.execute({
-      token: refreshToken,
+      token: refreshToken
     });
   }
 }

@@ -6,6 +6,8 @@ export const enTranslations = {
     "LOGIN.REGISTER_LINK": "Register",
     "LOGIN.SIGN_IN_TO": "Sign in to",
     "LOGIN.CONFIRM_BUTTON": "Log in",
+    "LOGIN.RESTRICTED_MESSAGE": "Too many attempts, try again in {{value}} minutes",
+    "LOGIN.INVALID_CREDENTIALS": "Wrong email or password.",
 
     "REGISTER.SIGN_UP_TO": "Sign up to",
     "REGISTER.ALREADY_HAVE_ACCOUNT": "Already have an account?",
@@ -18,6 +20,8 @@ export const enTranslations = {
 
     "INPUT.EMAIL_ADDRESS_LABEL": "Email Address",
     "INPUT.PASSWORD_LABEL": "Password",
+
+    "NOTIFICATION.REGISTER_SUCCESS": "Registration is complete.",
 
     "VALIDATION_MESSAGE.REQUIRED": "This field is required",
     "VALIDATION_MESSAGE.EMAIL": "Input should be valid email",

@@ -11,22 +11,32 @@ import {
   OutlinedInput,
   InputLabel,
 } from "@mui/material";
+import { useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { Routes } from "../router/constants.ts";
+import { RegisterError } from "../../api/AuthApiTypes.ts";
+import { useNotification } from "../../context/NotificationContext.tsx";
+import { useStore } from "../../context/StoreContext.tsx";
 import smileyFaceImage from "~assets/images/auth_smiley.png";
 import { AppPasswordTextField } from "~components/AppPasswordTextField.tsx";
 import { AppPrimaryButton } from "~components/AppPrimaryButton.tsx";
+import { ErrorMessage } from "~components/ErrorMessage.tsx";
 import { ValidationConstants, validationKeys } from "~constants/ValidationConstants.ts";
-import { LoginPageFunctions } from "~pages/AuthFunctions.ts";
+import { AuthFunctions } from "~pages/Auth/AuthFunctions.ts";
+import { Routes } from "~router/constants.ts";
 import { createSxStyles } from "~utils/createSxStyles.ts";
 
 import { RegisterForm } from "./RegisterPageTypes.ts";
 
 export const RegisterPage = () => {
   const { t } = useTranslation();
+  const { userStore } = useStore();
+  const navigate = useNavigate();
+  const { createNotification } = useNotification();
+  const [httpErrorMessage, setHttpErrorMessage] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -62,19 +72,27 @@ export const RegisterPage = () => {
   });
 
   const translateValidationError = (error: FieldError | undefined) => {
-    if (error === undefined) return;
+    if (error === undefined || error.message === undefined) return;
 
-    if (error.message === undefined) return;
-
-    const translationParams = LoginPageFunctions.getTranslationParams(error.message);
+    const translationParams = AuthFunctions.getTranslationParams(error.message);
 
     if (!translationParams) return;
 
     return t(...translationParams);
   };
 
+  const onRegisterSuccess = () => {
+    createNotification(t("NOTIFICATION.REGISTER_SUCCESS"));
+
+    navigate(Routes.LOGIN);
+  };
+
+  const onRegisterError = (error: RegisterError) => {
+    setHttpErrorMessage(error.message);
+  };
+
   const onSubmit = (formData: RegisterForm) => {
-    console.log(formData);
+    userStore.registerUser(formData, onRegisterSuccess, onRegisterError);
   };
 
   const formCheckboxLabel = (
@@ -112,6 +130,8 @@ export const RegisterPage = () => {
               </Typography>
             </Typography>
           </Stack>
+
+          {httpErrorMessage && <ErrorMessage message={httpErrorMessage} />}
 
           <Stack gap="2rem" width="100%">
             <FormControl fullWidth error={!!errors.email}>
