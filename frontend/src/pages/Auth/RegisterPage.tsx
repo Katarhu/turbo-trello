@@ -25,9 +25,9 @@ import { AppPasswordTextField } from "~components/AppPasswordTextField.tsx";
 import { AppPrimaryButton } from "~components/AppPrimaryButton.tsx";
 import { ErrorMessage } from "~components/ErrorMessage.tsx";
 import { ValidationConstants, validationKeys } from "~constants/ValidationConstants.ts";
-import { AuthFunctions } from "~pages/Auth/AuthFunctions.ts";
 import { Routes } from "~router/constants.ts";
 import { createSxStyles } from "~utils/createSxStyles.ts";
+import { TranslationFunctions } from "~utils/TranslationFunctions.ts";
 
 import { RegisterForm } from "./RegisterPageTypes.ts";
 
@@ -40,7 +40,7 @@ export const RegisterPage = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<RegisterForm>();
 
   const emailFormControl = register("email", {
@@ -74,7 +74,7 @@ export const RegisterPage = () => {
   const translateValidationError = (error: FieldError | undefined) => {
     if (error === undefined || error.message === undefined) return;
 
-    const translationParams = AuthFunctions.getTranslationParams(error.message);
+    const translationParams = TranslationFunctions.getTranslationParams(error.message);
 
     if (!translationParams) return;
 
@@ -157,7 +157,7 @@ export const RegisterPage = () => {
             </FormControl>
           </Stack>
 
-          <AppPrimaryButton type="submit" disabled={!isValid} text={t("REGISTER.CONFIRM_BUTTON")} fullWidth />
+          <AppPrimaryButton type="submit" text={t("REGISTER.CONFIRM_BUTTON")} fullWidth />
         </Stack>
       </Paper>
 

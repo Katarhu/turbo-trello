@@ -70,7 +70,7 @@ export class ListController {
     });
   }
 
-  @Post()
+  @Post("/get")
   async getLists(@Body() body: GetListsRequest, @TokenPayload() user: IUserPayload) {
     return await this._getListsQuery.execute({
       boardId: body.boardId,

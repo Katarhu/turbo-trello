@@ -2,7 +2,13 @@ import { AxiosResponse } from "axios";
 
 import { appAxios } from "../core/axios.ts";
 
-import { ICreateUser, ILoginResponse, ILoginUser, IRefreshTokenResponse } from "./AuthApiTypes.ts";
+import {
+  ICreateUser,
+  ILoginResponse,
+  ILoginUser,
+  IRefreshTokenResponse,
+  IResetSessionResponse,
+} from "./AuthApiTypes.ts";
 
 export class AuthApi {
   static createUser(data: ICreateUser): Promise<AxiosResponse<void>> {
@@ -14,6 +20,10 @@ export class AuthApi {
   }
 
   static refreshToken(): Promise<AxiosResponse<IRefreshTokenResponse>> {
-    return appAxios.post("auth/refresh", undefined, { withCredentials: true });
+    return appAxios.post("auth/refresh");
+  }
+
+  static resetSession(): Promise<AxiosResponse<IResetSessionResponse>> {
+    return appAxios.post("auth/reset-session");
   }
 }

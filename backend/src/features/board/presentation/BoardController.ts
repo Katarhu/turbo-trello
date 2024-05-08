@@ -68,7 +68,7 @@ export class BoardController {
     });
   }
 
-  @Post()
+  @Post("/get")
   async getBoards(@TokenPayload() user: IUserPayload) {
     return await this._getBoardsQuery.execute({
       userId: user.id,

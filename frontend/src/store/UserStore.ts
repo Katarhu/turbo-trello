@@ -1,5 +1,5 @@
 import { AxiosError } from "axios";
-import { action, flow, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 import { AccessTokenApi } from "../api/AccessTokenApi.ts";
 import { AuthApi } from "../api/AuthApi.ts";
@@ -10,33 +10,35 @@ import {
   ILoginUser,
   LoginRestrictedError,
   InvalidCredentialsError,
+  UnauthorizedError,
+  IResetSessionResponse,
 } from "../api/AuthApiTypes.ts";
 import { OnErrorCallback, OnSuccessCallback } from "~types/StoreTypes.ts";
 import { IUser } from "~types/User.ts";
 
-import { RootStore } from "./Store.ts";
-
 export class UserStore {
-  @observable
   user: IUser | null = null;
 
-  @observable
   accessToken: string | null = null;
 
-  constructor(private readonly rootStore: RootStore) {}
+  constructor() {
+    makeAutoObservable(this);
+  }
 
-  @action
   logOut() {
     this.user = null;
     this.accessToken = null;
   }
 
-  @action
   setAccessToken(token: string) {
     this.accessToken = token;
+    AccessTokenApi.setToken(token);
   }
 
-  @flow
+  setUser(user: IUser) {
+    this.user = user;
+  }
+
   async loginUser<TError = LoginRestrictedError | InvalidCredentialsError>(
     body: ILoginUser,
     onSuccess?: OnSuccessCallback<ILoginResponse>,
@@ -45,8 +47,8 @@ export class UserStore {
     try {
       const { data } = await AuthApi.loginUser(body);
 
-      this.user = data.user;
-      this.accessToken = data.accessToken;
+      this.setUser(data.user);
+      this.setAccessToken(data.accessToken);
 
       AccessTokenApi.setToken(data.accessToken);
 
@@ -58,7 +60,6 @@ export class UserStore {
     }
   }
 
-  @flow
   async registerUser<TError = RegisterError>(
     body: ICreateUser,
     onSuccess?: OnSuccessCallback<void>,
@@ -66,6 +67,26 @@ export class UserStore {
   ) {
     try {
       const { data } = await AuthApi.createUser(body);
+
+      if (onSuccess) onSuccess(data);
+    } catch (error) {
+      const errorResponse = (error as AxiosError<TError>).response!.data;
+
+      if (onError) onError(errorResponse);
+    }
+  }
+
+  async resetSession<TError = UnauthorizedError>(
+    onSuccess?: OnSuccessCallback<IResetSessionResponse>,
+    onError?: OnErrorCallback<TError>
+  ) {
+    try {
+      const { data } = await AuthApi.resetSession();
+
+      this.setAccessToken(data.accessToken);
+      this.setUser(data.user);
+
+      AccessTokenApi.setToken(data.accessToken);
 
       if (onSuccess) onSuccess(data);
     } catch (error) {

@@ -24,6 +24,11 @@ export interface IRefreshTokenResponse {
   accessToken: string;
 }
 
+export interface IResetSessionResponse {
+  user: IUser;
+  accessToken: string;
+}
+
 // Errors
 
 export interface RegisterError {
@@ -37,4 +42,8 @@ export interface InvalidCredentialsError {
 export interface LoginRestrictedError {
   message: string;
   banTimeRemaining: number;
+}
+
+export interface UnauthorizedError {
+  message: string;
 }

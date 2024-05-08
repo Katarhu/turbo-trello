@@ -1,8 +1,7 @@
-import { Validate } from "class-validator";
-
-import { IsValidObjectId } from "~utils/validators/isValidtObjectId";
+import { IsNotEmpty, IsNumber } from "class-validator";
 
 export class GetTasksRequest {
-  @Validate(IsValidObjectId)
+  @IsNumber()
+  @IsNotEmpty()
   readonly listId: number;
 }

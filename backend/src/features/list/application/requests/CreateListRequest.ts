@@ -1,12 +1,11 @@
-import { IsNotEmpty, IsString, Validate } from "class-validator";
-
-import { IsValidObjectId } from "~utils/validators/isValidtObjectId";
+import { IsNotEmpty, IsNumber, IsString, Validate } from "class-validator";
 
 export class CreateListRequest {
   @IsString()
   @IsNotEmpty()
   readonly title: string;
 
-  @Validate(IsValidObjectId)
+  @IsNumber()
+  @IsNotEmpty()
   readonly boardId: number;
 }

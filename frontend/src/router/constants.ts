@@ -6,4 +6,8 @@ export const enum Routes {
   REGISTER = "/register",
 
   MAIN = "/main",
+
+  MAIN_BOARDS = Routes.MAIN + "/boards",
+
+  MAIN_BOARD = Routes.MAIN_BOARDS + "/:id",
 }
