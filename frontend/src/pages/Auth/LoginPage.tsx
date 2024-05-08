@@ -3,7 +3,7 @@ import { Box, Paper, Typography, Stack, FormControl, InputLabel, OutlinedInput, 
 import { useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { InvalidCredentialsError, LoginRestrictedError } from "../../api/AuthApiTypes.ts";
 import { useStore } from "../../context/StoreContext.tsx";
@@ -23,6 +23,7 @@ export const LoginPage = () => {
   const { t } = useTranslation();
   const [httpErrorMessage, setHttpErrorMessage] = useState("");
   const { userStore } = useStore();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -64,7 +65,9 @@ export const LoginPage = () => {
     return t(...translationParams);
   };
 
-  const onLoginSuccess = () => {};
+  const onLoginSuccess = () => {
+    navigate(Routes.MAIN);
+  };
 
   const onLoginError = (error: InvalidCredentialsError | LoginRestrictedError) => {
     if (LoginPageFunctions.isLoginRestricted(error)) {

@@ -4,4 +4,6 @@ export const enum Routes {
   LOGIN = "/login",
 
   REGISTER = "/register",
+
+  MAIN = "/main",
 }
