@@ -2,8 +2,9 @@ import { FormControl, FormHelperText, InputLabel, Modal, OutlinedInput, Paper, S
 import { FieldError, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { ICreateList } from "../api/list/ListApiTypes.ts";
+import { ICreateTask } from "../api/tasks/TaskApiTypes.ts";
 import { useModal } from "../context/ModalContext.tsx";
+import { useStore } from "../context/StoreContext.tsx";
 import { AppPrimaryButton } from "~components/AppPrimaryButton.tsx";
 import { validationKeys } from "~constants/ValidationConstants.ts";
 import { createSxStyles } from "~utils/createSxStyles.ts";
@@ -15,12 +16,13 @@ export interface CreateTaskModalProps {
 
 export const CreateTaskModal = ({ listId }: CreateTaskModalProps) => {
   const { closeModal } = useModal();
+  const { taskStore } = useStore();
   const { t } = useTranslation();
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ICreateList>();
+  } = useForm<Omit<ICreateTask, "listId">>();
 
   const titleFormControl = register("title", {
     required: {
@@ -39,7 +41,14 @@ export const CreateTaskModal = ({ listId }: CreateTaskModalProps) => {
     return t(...translationParams);
   };
 
-  const onSubmit = () => {};
+  const onSubmit = (formData: Omit<ICreateTask, "listId">) => {
+    taskStore.createTask({
+      title: formData.title,
+      listId,
+    });
+
+    closeModal();
+  };
 
   return (
     <Modal open={true} onClose={closeModal}>
