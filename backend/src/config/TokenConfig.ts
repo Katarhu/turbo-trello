@@ -1,5 +1,5 @@
 export namespace TokenConfig {
-  export const accessTokenExpireTime = "2d";
+  export const accessTokenExpireTime = "5m";
 
   export const refreshTokenExpireTime = "7d";
 

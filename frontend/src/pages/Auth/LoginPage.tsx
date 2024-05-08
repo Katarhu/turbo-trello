@@ -3,30 +3,33 @@ import { Box, Paper, Typography, Stack, FormControl, InputLabel, OutlinedInput, 
 import { useState } from "react";
 import { FieldError, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { InvalidCredentialsError, LoginRestrictedError } from "../../api/AuthApiTypes.ts";
+import { useNotification } from "../../context/NotificationContext.tsx";
 import { useStore } from "../../context/StoreContext.tsx";
 import smileyFaceImage from "~assets/images/auth_smiley.png";
 import { AppPasswordTextField } from "~components/AppPasswordTextField.tsx";
 import { AppPrimaryButton } from "~components/AppPrimaryButton.tsx";
 import { ErrorMessage } from "~components/ErrorMessage.tsx";
 import { ValidationConstants, validationKeys } from "~constants/ValidationConstants.ts";
-import { AuthFunctions } from "~pages/Auth/AuthFunctions.ts";
 import { LoginPageFunctions } from "~pages/Auth/LoginPageFunctions.ts";
 import { LoginForm } from "~pages/Auth/LoginPageTypes.ts";
 import { Routes } from "~router/constants.ts";
 import { createSxStyles } from "~utils/createSxStyles.ts";
 import { formatTime } from "~utils/formatTime.ts";
+import { TranslationFunctions } from "~utils/TranslationFunctions.ts";
 
 export const LoginPage = () => {
   const { t } = useTranslation();
   const [httpErrorMessage, setHttpErrorMessage] = useState("");
   const { userStore } = useStore();
+  const { createNotification } = useNotification();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<LoginForm>();
 
   const emailFormControl = register("email", {
@@ -57,14 +60,18 @@ export const LoginPage = () => {
   const translateValidationError = (error: FieldError | undefined) => {
     if (error === undefined || error.message === undefined) return;
 
-    const translationParams = AuthFunctions.getTranslationParams(error.message);
+    const translationParams = TranslationFunctions.getTranslationParams(error.message);
 
     if (!translationParams) return;
 
     return t(...translationParams);
   };
 
-  const onLoginSuccess = () => {};
+  const onLoginSuccess = () => {
+    createNotification(t("NOTIFICATION.LOGIN_SUCCESS"));
+
+    navigate(Routes.MAIN);
+  };
 
   const onLoginError = (error: InvalidCredentialsError | LoginRestrictedError) => {
     if (LoginPageFunctions.isLoginRestricted(error)) {
@@ -119,7 +126,7 @@ export const LoginPage = () => {
             </FormControl>
           </Stack>
 
-          <AppPrimaryButton type="submit" disabled={!isValid} text={t("LOGIN.CONFIRM_BUTTON")} fullWidth />
+          <AppPrimaryButton type="submit" text={t("LOGIN.CONFIRM_BUTTON")} fullWidth />
         </Stack>
       </Paper>
 

@@ -44,7 +44,7 @@ export const NotificationContextProvider = ({ children }: PropsWithChildren) => 
   return (
     <NotificationContext.Provider value={{ createNotification }}>
       {children}
-      <Stack sx={notificationStyles.container}>
+      <Stack sx={notificationStyles.container} gap={2}>
         {notifications.map((notification) => (
           <Alert sx={notificationStyles.alert} severity={notification.type} key={notification.id}>
             {notification.message}

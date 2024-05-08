@@ -1,6 +1,27 @@
 export const ukTranslations = {
   translation: {
     "PUBLIC_HEADER.GET_STARTED": "Почати роботу",
+    "PUBLIC_HEADER.LOGOUT": "Вийти",
+
+    "BOARDS.TITLE": "Керуйте своїми дошками.",
+    "BOARDS.DELETE": "Видалити",
+    "BOARDS.CREATED_AT": "Створено:",
+    "BOARDS.UPDATED_AT": "Змінено:",
+    "BOARDS.TIME_SEPARATOR": "в",
+    "BOARDS.NOTIFICATION_DELETED": "Дошка була успішно видалена.",
+    "BOARDS.NOTIFICATION_UPDATED": "Дошка була успішно змінена.",
+
+    "CREATE_BOARD_MODAL.TITLE": "Створіть нову дошку.",
+    "CREATE_BOARD_MODAL.CONFIRM": "Створити",
+
+    "CREATE_LIST_MODAL.TITLE": "Створіть новий список.",
+    "CREATE_LIST_MODAL.CONFIRM": "Створити",
+
+    "CREATE_TASK_MODAL.TITLE": "Створіть новий список.",
+    "CREATE_TASK_MODAL.CONFIRM": "Створити",
+
+    "MAIN_SIDEBAR.BOARDS": "Дошки",
+    "MAIN_SIDEBAR.MAIN": "Головна",
 
     "LOGIN.DONT_HAVE_ACCOUNT": " Ще не зареєстровані?",
     "LOGIN.REGISTER_LINK": "Створіть обліковий запис",
@@ -20,8 +41,11 @@ export const ukTranslations = {
 
     "INPUT.EMAIL_ADDRESS_LABEL": "Пошта",
     "INPUT.PASSWORD_LABEL": "Пароль",
+    "INPUT.TITLE_LABEL": "Назва",
 
     "NOTIFICATION.REGISTER_SUCCESS": "Реєстрація пройшла успішно.",
+    "NOTIFICATION.LOGIN_SUCCESS": "Ви успішно ввійшли в систему",
+    "NOTIFICATION.LOGOUT": "Ви успішно вийшли з системи",
 
     "VALIDATION_MESSAGE.REQUIRED": "Це поле є обов'язковим",
     "VALIDATION_MESSAGE.EMAIL": "Пошта повинна бути коректною",

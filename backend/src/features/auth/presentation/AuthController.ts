@@ -13,6 +13,7 @@ import { AuthCommandToken } from "~features/auth/diTokens";
 import { ICreateUserCommand } from "~features/user/application/commands/ICreateUserCommand";
 import { UserCommandToken } from "~features/user/diTokens";
 import { Cookies } from "~utils/decorators/CookieDecorator";
+import { IResetSessionCommand } from "~features/auth/application/commands/ResetSessionCommand/IResetSessionCommand";
 
 @Controller("/auth")
 export class AuthController {
@@ -24,6 +25,9 @@ export class AuthController {
 
   @Inject(AuthCommandToken.REFRESH_TOKEN_COMMAND)
   private _refreshTokenCommand: IRefreshTokenCommand;
+
+  @Inject(AuthCommandToken.RESET_SESSION_COMMAND)
+  private _resetSessionCommand: IResetSessionCommand;
 
   @Post("/register")
   async register(@Body() body: RegisterUserRequest): Promise<RegisterUserResponse> {
@@ -45,7 +49,14 @@ export class AuthController {
   @Post("/refresh")
   async refreshAccessToken(@Cookies(TokenConfig.cookieTokenKey) refreshToken: string): Promise<RefreshTokenResponse> {
     return await this._refreshTokenCommand.execute({
-      token: refreshToken
+      token: refreshToken,
+    });
+  }
+
+  @Post("/reset-session")
+  async resetSession(@Cookies(TokenConfig.cookieTokenKey) refreshToken: string) {
+    return await this._resetSessionCommand.execute({
+      refreshToken,
     });
   }
 }

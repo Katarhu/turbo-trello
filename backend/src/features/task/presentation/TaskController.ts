@@ -88,7 +88,7 @@ export class TaskController {
     });
   }
 
-  @Post()
+  @Post("/get")
   async getTasks(@Body() body: GetTasksRequest, @TokenPayload() user: IUserPayload) {
     return await this._getTasksQuery.execute({
       listId: body.listId,

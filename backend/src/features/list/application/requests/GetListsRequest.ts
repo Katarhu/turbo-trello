@@ -1,8 +1,8 @@
-import { Validate } from "class-validator";
+import { IsNotEmpty, IsNumber, Validate } from "class-validator";
 
-import { IsValidObjectId } from "~utils/validators/isValidtObjectId";
 
 export class GetListsRequest {
-  @Validate(IsValidObjectId)
+  @IsNumber()
+  @IsNotEmpty()
   readonly boardId: number;
 }
