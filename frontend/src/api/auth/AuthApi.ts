@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 
-import { appAxios } from "../core/axios.ts";
+import { appAxios } from "~core/axios.ts";
 
 import {
   ICreateUser,

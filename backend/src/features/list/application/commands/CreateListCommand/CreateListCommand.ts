@@ -32,6 +32,10 @@ export class CreateListCommand implements ICreateListCommand {
       boardId: dto.boardId,
     });
 
+    console.log(newList);
+
+    console.log(dto.userId);
+
     return new CreateListResponse(ListMapper.toDto(newList));
   }
 }

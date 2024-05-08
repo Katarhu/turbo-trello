@@ -6,12 +6,14 @@ import { PrivateHeader } from "~features/PrivateHeader.tsx";
 
 export const PrivatePage = () => {
   return (
-    <Box sx={{ height: "100%" }}>
+    <Stack sx={{ minHeight: "100%" }}>
       <PrivateHeader />
-      <Stack direction="row" alignItems="stretch" sx={{ height: "100%" }}>
+      <Stack direction="row" alignItems="stretch" sx={{ flexGrow: 1 }}>
         <MainSidebar />
-        <Outlet />
+        <Box sx={{ flexGrow: 1 }}>
+          <Outlet />
+        </Box>
       </Stack>
-    </Box>
+    </Stack>
   );
 };

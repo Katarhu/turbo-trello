@@ -1,4 +1,4 @@
-import { InvalidCredentialsError, LoginRestrictedError } from "../../api/AuthApiTypes.ts";
+import { InvalidCredentialsError, LoginRestrictedError } from "../../api/auth/AuthApiTypes.ts";
 
 export namespace LoginPageFunctions {
   export const isLoginRestricted = (

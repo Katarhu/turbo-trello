@@ -11,6 +11,11 @@ export const enTranslations = {
     "BOARDS.NOTIFICATION_DELETED": "Board was successfully deleted.",
     "BOARDS.NOTIFICATION_UPDATED": "Board was successfully updated.",
 
+    "LISTS.TITLE": "Manage your lists and tasks",
+    "LISTS.NOTIFICATION_CREATED": "New list was successfully created.",
+    "LISTS.NOTIFICATION_UPDATED": "List was successfully updated.",
+    "LISTS.NOTIFICATION_DELETED": "List was successfully deleted.",
+
     "CREATE_BOARD_MODAL.TITLE": "Create new board.",
     "CREATE_BOARD_MODAL.CONFIRM": "Create",
 

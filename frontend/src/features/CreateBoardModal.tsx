@@ -2,7 +2,7 @@ import { FormControl, FormHelperText, InputLabel, Modal, OutlinedInput, Paper, S
 import { FieldError, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { ICreateBoard } from "../api/BoardApiTypes.ts";
+import { ICreateBoard } from "../api/board/BoardApiTypes.ts";
 import { useModal } from "../context/ModalContext.tsx";
 import { useStore } from "../context/StoreContext.tsx";
 import { AppPrimaryButton } from "~components/AppPrimaryButton.tsx";

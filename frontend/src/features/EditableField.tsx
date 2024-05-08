@@ -6,6 +6,7 @@ import { IconButton } from "@mui/material";
 import { useForm } from "react-hook-form";
 
 import { useBooleanToggle } from "../hooks/useBooleanToggle.ts";
+import { createSxStyles } from "~utils/createSxStyles.ts";
 
 interface EditableFieldProps {
   value: string;
@@ -35,18 +36,18 @@ export const EditableField = ({ value, onEdit }: EditableFieldProps) => {
   };
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box sx={componentSx.container}>
       {!isEditing ? (
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Typography>{value}</Typography>
+        <Stack direction="row" gap={1} alignItems="center" justifyContent="space-between">
+          <Typography sx={componentSx.text}>{value}</Typography>
           <IconButton onClick={() => toggleEditing()}>
             <EditIcon color="action" />
           </IconButton>
         </Stack>
       ) : (
-        <Stack direction="row" gap={1} component="form" onSubmit={handleSubmit(onSubmit)}>
-          <FormControl error={!!errors.text} fullWidth>
-            <Input {...register("value")} required />
+        <Stack sx={componentSx.form} direction="row" gap={1} component="form" onSubmit={handleSubmit(onSubmit)}>
+          <FormControl error={!!errors.value} fullWidth>
+            <Input sx={componentSx.input} {...register("value")} required />
           </FormControl>
           <IconButton onClick={() => setIsEditing(false)}>
             <CloseIcon color="error" />
@@ -59,3 +60,23 @@ export const EditableField = ({ value, onEdit }: EditableFieldProps) => {
     </Box>
   );
 };
+
+const componentSx = createSxStyles({
+  container: {
+    maxWidth: "100%",
+    flexGrow: 1,
+    overflow: "hidden",
+  },
+  text: {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+  },
+  form: {
+    maxWidth: "100%",
+    flexGrow: 1,
+  },
+  input: {
+    padding: 0,
+  },
+});
