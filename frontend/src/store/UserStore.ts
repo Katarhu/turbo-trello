@@ -2,7 +2,7 @@ import { AxiosError } from "axios";
 import { makeAutoObservable } from "mobx";
 
 import { AccessTokenApi } from "../api/AccessTokenApi.ts";
-import { AuthApi } from "../api/AuthApi.ts";
+import { AuthApi } from "../api/auth/AuthApi.ts";
 import {
   RegisterError,
   ICreateUser,
@@ -12,7 +12,7 @@ import {
   InvalidCredentialsError,
   UnauthorizedError,
   IResetSessionResponse,
-} from "../api/AuthApiTypes.ts";
+} from "../api/auth/AuthApiTypes.ts";
 import { OnErrorCallback, OnSuccessCallback } from "~types/StoreTypes.ts";
 import { IUser } from "~types/User.ts";
 

@@ -7,7 +7,7 @@ export class ListMapper {
   static toEntity(initialData: IList): List {
     const { id, title, userId, boardId, createdAt, updatedAt } = initialData;
 
-    return new List(id, title, userId, boardId, createdAt, updatedAt);
+    return new List(id, title, boardId, userId, createdAt, updatedAt);
   }
 
   static toDto(entity: List): ListDto {

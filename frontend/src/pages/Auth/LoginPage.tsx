@@ -5,7 +5,7 @@ import { FieldError, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import { Link, useNavigate } from "react-router-dom";
 
-import { InvalidCredentialsError, LoginRestrictedError } from "../../api/AuthApiTypes.ts";
+import { InvalidCredentialsError, LoginRestrictedError } from "../../api/auth/AuthApiTypes.ts";
 import { useNotification } from "../../context/NotificationContext.tsx";
 import { useStore } from "../../context/StoreContext.tsx";
 import smileyFaceImage from "~assets/images/auth_smiley.png";

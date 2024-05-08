@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from "axios";
 
 import { AccessTokenApi } from "../api/AccessTokenApi.ts";
-import { AuthApi } from "../api/AuthApi.ts";
+import { AuthApi } from "../api/auth/AuthApi.ts";
 import { ApiConstants } from "~constants/ApiConstants.ts";
 
 export const appAxios = axios.create({
@@ -20,8 +20,6 @@ export const setupSilentRefresh = (onTokenRefresh: (token: string) => void, onSe
     (config) => config,
     async (error) => {
       const originalRequest: InternalAxiosRequestConfig & { _isRetry?: boolean } = error.config;
-
-      console.log(originalRequest);
 
       if (!(error.response.status === 401) || !error.config || error.config._isRetry) throw error;
 

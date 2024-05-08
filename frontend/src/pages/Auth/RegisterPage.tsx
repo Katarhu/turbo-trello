@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import { RegisterError } from "../../api/AuthApiTypes.ts";
+import { RegisterError } from "../../api/auth/AuthApiTypes.ts";
 import { useNotification } from "../../context/NotificationContext.tsx";
 import { useStore } from "../../context/StoreContext.tsx";
 import smileyFaceImage from "~assets/images/auth_smiley.png";

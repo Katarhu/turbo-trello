@@ -2,8 +2,10 @@ import { FormControl, FormHelperText, InputLabel, Modal, OutlinedInput, Paper, S
 import { FieldError, useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 
-import { ICreateList } from "../api/ListApiTypes.ts";
+import { ICreateList } from "../api/list/ListApiTypes.ts";
 import { useModal } from "../context/ModalContext.tsx";
+import { useNotification } from "../context/NotificationContext.tsx";
+import { useStore } from "../context/StoreContext.tsx";
 import { AppPrimaryButton } from "~components/AppPrimaryButton.tsx";
 import { validationKeys } from "~constants/ValidationConstants.ts";
 import { createSxStyles } from "~utils/createSxStyles.ts";
@@ -16,6 +18,7 @@ export interface CreateListModalProps {
 export const CreateListModal = ({ boardId }: CreateListModalProps) => {
   const { closeModal } = useModal();
   const { t } = useTranslation();
+  const { listStore } = useStore();
   const {
     register,
     handleSubmit,
@@ -39,7 +42,14 @@ export const CreateListModal = ({ boardId }: CreateListModalProps) => {
     return t(...translationParams);
   };
 
-  const onSubmit = () => {};
+  const onSubmit = (body: Omit<ICreateList, "boardId">) => {
+    listStore.createList({
+      title: body.title,
+      boardId,
+    });
+
+    closeModal();
+  };
 
   return (
     <Modal open={true} onClose={closeModal}>

@@ -1,31 +1,35 @@
 import { makeAutoObservable } from "mobx";
 
-import { BoardApi } from "../api/BoardApi.ts";
-import { ICreateBoard, IUpdateBoard } from "../api/BoardApiTypes.ts";
+import { BoardApi } from "../api/board/BoardApi.ts";
+import { ICreateBoard, IUpdateBoard } from "../api/board/BoardApiTypes.ts";
 import { IBoard } from "~types/Board.ts";
 import { OnErrorCallback, OnSuccessCallback } from "~types/StoreTypes.ts";
 
 export class BoardStore {
-  boards: IBoard[] = [];
+  private _boards: IBoard[] = [];
 
   constructor() {
     makeAutoObservable(this);
   }
 
+  get boards() {
+    return this._boards;
+  }
+
   setBoards(boards: IBoard[]) {
-    this.boards = boards;
+    this._boards = boards;
   }
 
   addBoard(board: IBoard) {
-    this.boards.push(board);
+    this._boards.push(board);
   }
 
   setDeletedBoard(boardId: number) {
-    this.boards = this.boards.filter((board) => board.id !== boardId);
+    this._boards = this.boards.filter((board) => board.id !== boardId);
   }
 
   setUpdatedBoard(board: IBoard) {
-    this.boards = this.boards.map((prevBoard) => (prevBoard.id === board.id ? board : prevBoard));
+    this._boards = this.boards.map((prevBoard) => (prevBoard.id === board.id ? board : prevBoard));
   }
 
   async getBoards(onSuccess?: OnSuccessCallback<IBoard[]>, onError?: OnErrorCallback<void>) {

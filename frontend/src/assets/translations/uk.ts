@@ -11,6 +11,11 @@ export const ukTranslations = {
     "BOARDS.NOTIFICATION_DELETED": "Дошка була успішно видалена.",
     "BOARDS.NOTIFICATION_UPDATED": "Дошка була успішно змінена.",
 
+    "LISTS.TITLE": "Керуйте своїми списками та завданнями",
+    "LISTS.NOTIFICATION_CREATED": "Новий список був успішно створений.",
+    "LISTS.NOTIFICATION_UPDATED": "Новий список був успішно змінений.",
+    "LISTS.NOTIFICATION_DELETED": "Список був успішно видалений.",
+
     "CREATE_BOARD_MODAL.TITLE": "Створіть нову дошку.",
     "CREATE_BOARD_MODAL.CONFIRM": "Створити",
 
