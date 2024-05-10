@@ -3,6 +3,7 @@ import { Response } from "express";
 
 import { TokenConfig } from "~config/TokenConfig";
 import { ILoginUserCommand } from "~features/auth/application/commands/Login/ILoginUserCommand";
+import { IResetSessionCommand } from "~features/auth/application/commands/ResetSessionCommand/IResetSessionCommand";
 import { IRefreshTokenCommand } from "~features/auth/application/commands/Token/IRefreshTokenCommand";
 import { LoginUserRequest } from "~features/auth/application/requests/LoginUserRequest";
 import { RegisterUserRequest } from "~features/auth/application/requests/RegisterUserRequest";
@@ -13,7 +14,6 @@ import { AuthCommandToken } from "~features/auth/diTokens";
 import { ICreateUserCommand } from "~features/user/application/commands/ICreateUserCommand";
 import { UserCommandToken } from "~features/user/diTokens";
 import { Cookies } from "~utils/decorators/CookieDecorator";
-import { IResetSessionCommand } from "~features/auth/application/commands/ResetSessionCommand/IResetSessionCommand";
 
 @Controller("/auth")
 export class AuthController {
@@ -35,7 +35,10 @@ export class AuthController {
   }
 
   @Post("/login")
-  async login(@Body() body: LoginUserRequest, @Res({ passthrough: true }) response: Response): Promise<Omit<LoginUserResponse, "refreshToken">> {
+  async login(
+    @Body() body: LoginUserRequest,
+    @Res({ passthrough: true }) response: Response
+  ): Promise<Omit<LoginUserResponse, "refreshToken">> {
     const { refreshToken, accessToken, user } = await this._loginUserCommand.execute(body);
 
     response.cookie(TokenConfig.cookieTokenKey, refreshToken);
@@ -58,5 +61,10 @@ export class AuthController {
     return await this._resetSessionCommand.execute({
       refreshToken,
     });
+  }
+
+  @Post("/logout")
+  async logOut(@Res({ passthrough: true }) response: Response) {
+    response.clearCookie(TokenConfig.cookieTokenKey);
   }
 }

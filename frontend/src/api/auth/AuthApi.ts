@@ -26,4 +26,8 @@ export class AuthApi {
   static resetSession(): Promise<AxiosResponse<IResetSessionResponse>> {
     return appAxios.post("auth/reset-session");
   }
+
+  static logOut(): Promise<AxiosResponse<void>> {
+    return appAxios.post("auth/logout");
+  }
 }

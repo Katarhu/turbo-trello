@@ -25,11 +25,6 @@ export class UserStore {
     makeAutoObservable(this);
   }
 
-  logOut() {
-    this.user = null;
-    this.accessToken = null;
-  }
-
   setAccessToken(token: string) {
     this.accessToken = token;
     AccessTokenApi.setToken(token);
@@ -94,5 +89,14 @@ export class UserStore {
 
       if (onError) onError(errorResponse);
     }
+  }
+
+  async logOut() {
+    try {
+      await AuthApi.logOut();
+
+      this.user = null;
+      this.accessToken = null;
+    } catch (err) {}
   }
 }
