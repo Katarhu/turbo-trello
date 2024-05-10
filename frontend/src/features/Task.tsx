@@ -41,8 +41,6 @@ export const Task = ({ title, id, listId }: TaskProps) => {
     taskStore.deleteTask({ id, listId }, onSuccessfulTaskDelete);
   };
 
-  console.log(listId);
-
   return (
     <Paper sx={componentSx.container}>
       <Stack direction="row">

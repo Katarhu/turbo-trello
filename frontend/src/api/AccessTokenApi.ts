@@ -1,15 +1,18 @@
 import { TokenConstants } from "~constants/TokenConstants.ts";
+import { LocalStorageService } from "~utils/LocalStorageService.ts";
 
 export class AccessTokenApi {
+  private static readonly _localStorageService = new LocalStorageService<string>(TokenConstants.ACCESS_TOKEN_KEY);
+
   static setToken(token: string): void {
-    localStorage.setItem(TokenConstants.ACCESS_TOKEN_KEY, token);
+    this._localStorageService.setItem(token);
   }
 
   static getToken(): string | null {
-    return localStorage.getItem(TokenConstants.ACCESS_TOKEN_KEY);
+    return this._localStorageService.getItem();
   }
 
   static removeToken(): void {
-    localStorage.removeItem(TokenConstants.ACCESS_TOKEN_KEY);
+    this._localStorageService.removeItem();
   }
 }

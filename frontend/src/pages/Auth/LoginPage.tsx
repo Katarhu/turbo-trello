@@ -18,6 +18,7 @@ import { LoginForm } from "~pages/Auth/LoginPageTypes.ts";
 import { Routes } from "~router/constants.ts";
 import { createSxStyles } from "~utils/createSxStyles.ts";
 import { formatTime } from "~utils/formatTime.ts";
+import { LoginRestrictionService } from "~utils/LoginRestrictionService.ts";
 import { TranslationFunctions } from "~utils/TranslationFunctions.ts";
 
 export const LoginPage = () => {
@@ -30,6 +31,7 @@ export const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
   } = useForm<LoginForm>();
 
   const emailFormControl = register("email", {
@@ -77,6 +79,8 @@ export const LoginPage = () => {
     if (LoginPageFunctions.isLoginRestricted(error)) {
       setHttpErrorMessage(t("LOGIN.RESTRICTED_MESSAGE", { value: formatTime(error.banTimeRemaining) }));
 
+      LoginRestrictionService.setRestriction(getValues("email"), error.banTimeRemaining);
+
       return;
     }
 
@@ -84,6 +88,11 @@ export const LoginPage = () => {
   };
 
   const onSubmit = (data: LoginForm) => {
+    const restrictionTime = LoginRestrictionService.getRestrictionTime(data.email);
+
+    if (restrictionTime)
+      return setHttpErrorMessage(t("LOGIN.RESTRICTED_MESSAGE", { value: formatTime(restrictionTime) }));
+
     userStore.loginUser(data, onLoginSuccess, onLoginError);
   };
 

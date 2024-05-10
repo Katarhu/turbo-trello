@@ -19,11 +19,11 @@ export const setupSilentRefresh = (onTokenRefresh: (token: string) => void, onSe
   appAxios.interceptors.response.use(
     (config) => config,
     async (error) => {
+      if (!(error.response.status === 401) || !error.config || error.config._isRetry) throw error;
+
       const originalRequest: InternalAxiosRequestConfig & { _isRetry?: boolean } = error.config;
 
       if (originalRequest.url === "auth/reset-session") throw error;
-
-      if (!(error.response.status === 401) || !error.config || error.config._isRetry) throw error;
 
       originalRequest._isRetry = true;
 
@@ -34,7 +34,6 @@ export const setupSilentRefresh = (onTokenRefresh: (token: string) => void, onSe
 
         return appAxios.request(originalRequest);
       } catch (error) {
-        console.log("here");
         onSessionEnd();
       }
     }
