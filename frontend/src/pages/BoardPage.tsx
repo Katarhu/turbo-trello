@@ -1,5 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
-import { IconButton, Stack, Typography } from "@mui/material";
+import { IconButton, Stack, Typography, Box } from "@mui/material";
 import { observer } from "mobx-react";
 import { useEffect } from "react";
 import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
@@ -39,14 +39,32 @@ export const BoardPage = observer(() => {
   };
 
   const onDragEnd = (result: DropResult) => {
+    console.log("result.type: ", result.type);
+    console.log("!result.destination?.droppableId: ", result.destination?.droppableId);
     if (!result.destination?.droppableId) return;
-
-    taskStore.changeTaskList({
-      oldListId: Number(result.source.droppableId),
-      listId: Number(result.destination.droppableId),
-      id: Number(result.draggableId),
-    });
+    // if (result.type === "COLUMN") {
+    //   listStore.setChangedList(
+    //     Number(result.source.droppableId),
+    //     Number(result.destination.droppableId),
+    //     Number(result.draggableId),
+    //     boardId
+    //   );
+    // }
+    if (result.type === "TASK") {
+      console.log("oldListId: ", result.source.droppableId);
+      console.log("newListId: ", result.destination.droppableId);
+      console.log("id: ", result.draggableId);
+      taskStore.changeTaskList({
+        oldListId: Number(result.source.droppableId),
+        id: Number(result.destination.droppableId),
+        listId: Number(result.draggableId),
+      });
+    }
   };
+
+  // const onDragListEnd = (result: DropResult) => {
+  //   console.log("result: ", result);
+  // };
 
   return (
     <Stack sx={componentSx.container} gap={4}>
@@ -56,20 +74,35 @@ export const BoardPage = observer(() => {
           <AddIcon />
         </IconButton>
       </Stack>
-
-      <Stack gap={4} direction="row" sx={componentSx.listsContainer}>
-        <DragDropContext onDragEnd={onDragEnd}>
-          {listStore.getMappableLists(boardId).map((list) => (
-            <Droppable key={list.id} droppableId={list.id.toString()}>
-              {(provided, snapshot) => (
-                <div ref={provided.innerRef} {...provided.droppableProps}>
-                  <List {...list} isDraggingOver={snapshot.isDraggingOver} />
-                </div>
-              )}
-            </Droppable>
-          ))}
-        </DragDropContext>
-      </Stack>
+      <DragDropContext onDragEnd={onDragEnd}>
+        {/* <Stack gap={4} direction="row" sx={componentSx.listsContainer}> */}
+        <Box sx={{ display: "inline-flex" }}>
+          <DragDropContext onDragEnd={onDragEnd}>
+            {listStore.getMappableLists(boardId).map((list, index) => (
+              // <Droppable
+              //   key={list.id}
+              //   droppableId={list.id.toString()}
+              //   direction="horizontal"
+              //   type="COLUMN"
+              //   ignoreContainerClipping={true}
+              //   isCombineEnabled={true}
+              // >
+              //   {(provided, snapshot) => (
+              //     <div ref={provided.innerRef} {...provided.droppableProps}>
+              <List
+                {...list}
+                key={list.id}
+                // isDraggingOver={snapshot.isDraggingOver}
+                index={index}
+              />
+              //   </div>
+              // )}
+              // </Droppable>
+            ))}
+          </DragDropContext>
+        </Box>
+        {/* </Stack> */}
+      </DragDropContext>
     </Stack>
   );
 });
